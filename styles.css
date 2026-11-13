@@ -45,7 +45,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 16px var(--g); background: rgba(244,241,234,.82); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s; }
 .nav.scrolled { border-color: var(--line); }
 .wordmark { font-weight: 600; font-size: 18px; letter-spacing: -.02em; display: inline-flex; gap: 4px; align-items: baseline; }
-.wordmark span { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); font-size: 1.2em; }
+
 .nav nav { display: flex; gap: 32px; font-size: 15px; color: var(--muted); }
 .nav nav a:hover { color: var(--ink); }
 
@@ -251,3 +251,12 @@ a.build:hover { background: #fff; }
 a.build:hover .build-link { color: var(--accent); }
 .pre-mega { font-size: clamp(20px, 2vw, 28px); letter-spacing: -.02em; max-width: 620px; margin-bottom: 20px; }
 @media (max-width: 760px) { .build-grid { grid-template-columns: 1fr; } .build { min-height: 0; } }
+/* LOGO: heavy AXD, X cut on the diagonal, italic "studio" */
+.logo { display: inline-flex; align-items: center; font-family: var(--sans); font-weight: 800; letter-spacing: -.06em; line-height: 1; font-size: 26px; color: var(--ink); }
+.slice { position: relative; display: inline-block; color: transparent; }
+.slice::before, .slice::after { content: attr(data-t); position: absolute; inset: 0; color: var(--x, var(--ink)); }
+.slice::before { clip-path: polygon(0 0, 100% 0, 0 100%); transform: translate(-.025em, -.025em); }
+.slice::after { clip-path: polygon(100% 0, 100% 100%, 0 100%); transform: translate(.025em, .025em); }
+.logo-sub { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; font-size: .5em; margin-left: .3em; align-self: flex-end; margin-bottom: .05em; color: var(--muted); }
+
+.footer .logo { font-size: 22px; }
