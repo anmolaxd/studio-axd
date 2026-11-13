@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -6,24 +6,37 @@
 <title>Studio AXD | Websites and WhatsApp automation for local businesses</title>
 <meta name="description" content="Studio AXD designs websites for local businesses and builds the WhatsApp and AI systems behind them, so every enquiry gets a reply in seconds, in English, Kannada or Hindi. Based in Mysuru.">
 <meta property="og:title" content="Studio AXD">
-<meta property="og:description" content="Websites that bring the enquiry in. Automations that answer it.">
+<meta property="og:description" content="Every enquiry, answered. Websites and WhatsApp automation from Mysuru.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0b0b0c">
+<meta name="theme-color" content="#f4f1ea">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>
+  // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
 </head>
 <body>
 
+<!-- OPENING SEQUENCE (first visit only) -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-chat">
+    <p class="ib in" id="introIn">Namaskara, teeth cleaning ge appointment beku, Saturday sigutha?</p>
+    <p class="ib out" id="introOut"></p>
+  </div>
+  <button class="intro-skip" id="introSkip" tabindex="-1">Skip</button>
+</div>
+
 <header class="nav" id="top">
-  <a class="wordmark" href="#top" aria-label="Studio AXD home">Studio <span>AXD</span></a>
+  <a class="wordmark" href="#top" aria-label="Studio AXD home">Studio<span>AXD</span></a>
   <nav aria-label="Main">
-    <a href="#services">Services</a>
-    <a href="#how">How it works</a>
+    <a href="#story">How it works</a>
+    <a href="#websites">Websites</a>
     <a href="#process">Process</a>
-    <a href="#agencies">For agencies</a>
+    <a href="#agencies">Agencies</a>
   </nav>
   <a class="btn btn-small" href="https://wa.me/918762553585" target="_blank" rel="noopener">WhatsApp us</a>
 </header>
@@ -32,172 +45,171 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-copy">
-    <p class="eyebrow reveal-load" style="--d:0">Studio AXD · Mysuru, India</p>
-    <h1>
-      <span class="line"><span style="--d:1">Websites that bring</span></span>
-      <span class="line"><span style="--d:2">the enquiry in.</span></span>
-      <span class="line"><span style="--d:3"><em>Automations that</em></span></span>
-      <span class="line"><span style="--d:4"><em>answer it.</em></span></span>
-    </h1>
-    <p class="lede reveal-load" style="--d:5">We design websites for local businesses and build the WhatsApp and AI systems behind them, so every customer gets a reply in seconds, in English, Kannada or Hindi.</p>
-    <div class="cta-row reveal-load" style="--d:6">
-      <a class="btn" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp</a>
-      <a class="btn btn-ghost" href="#how">See how it works</a>
+  <p class="kicker k-anim">Studio AXD &nbsp;/&nbsp; Mysuru, India</p>
+  <h1 class="hero-title" aria-label="Every enquiry, answered in English, Kannada or Hindi.">
+    <span class="row"><span class="w">Every</span> <span class="w">enquiry,</span></span>
+    <span class="row"><span class="w">answered</span> <span class="w">in</span></span>
+    <span class="row lang-row"><span class="lang" id="lang"><span class="lang-word is-on">English.</span><span class="lang-word">Kannada.</span><span class="lang-word">Hindi.</span></span></span>
+  </h1>
+  <div class="hero-foot k-anim">
+    <p class="lede">We design websites for local businesses and build the WhatsApp and AI systems behind them, so no customer waits for a reply.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="link" href="#story">Watch it work</a>
     </div>
   </div>
+  <div class="scroll-cue k-anim" aria-hidden="true"><span></span>Scroll</div>
+</section>
 
-  <div class="hero-visual reveal-load" style="--d:3" aria-label="Animated example of a WhatsApp enquiry getting an instant reply">
-    <div class="phone">
-      <div class="phone-top">
-        <div class="avatar" aria-hidden="true">DC</div>
-        <div>
-          <p class="chat-name">Demo Dental Clinic</p>
-          <p class="chat-status" id="chatStatus">online</p>
+<!-- MARQUEE OF REAL BUSINESS TYPES -->
+<div class="ticker" aria-label="Businesses we build for">
+  <div class="ticker-track">
+    <span>Clinics</span><span>Dentists</span><span>Coaching centres</span><span>Gyms</span><span>Salons</span><span>Homestays</span><span>Restaurants</span><span>Plumbers</span><span>Electricians</span><span>Online stores</span>
+    <span aria-hidden="true">Clinics</span><span aria-hidden="true">Dentists</span><span aria-hidden="true">Coaching centres</span><span aria-hidden="true">Gyms</span><span aria-hidden="true">Salons</span><span aria-hidden="true">Homestays</span><span aria-hidden="true">Restaurants</span><span aria-hidden="true">Plumbers</span><span aria-hidden="true">Electricians</span><span aria-hidden="true">Online stores</span>
+  </div>
+</div>
+
+<!-- PINNED STORY -->
+<section class="story" id="story">
+  <div class="story-inner">
+    <div class="acts">
+      <p class="kicker">How the WhatsApp assistant works</p>
+      <article class="act" data-act="0"><span class="act-n">01</span><h2>A customer writes in.</h2><p>Any hour, any language. If the reply comes hours later, they have often called someone else.</p></article>
+      <article class="act" data-act="1"><span class="act-n">02</span><h2>The AI reads it.</h2><p>It works out the language, what they want and how urgent it is. It never invents prices, timings or doctor names.</p></article>
+      <article class="act" data-act="2"><span class="act-n">03</span><h2>A reply goes out in seconds.</h2><p>Short, polite and in the customer's own language, from your business name, on the official WhatsApp Business platform.</p></article>
+      <article class="act" data-act="3"><span class="act-n">04</span><h2>You get the lead.</h2><p>Name, need and a suggested next step land in your list, so your team only steps in to close.</p></article>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="phone">
+        <div class="phone-bar"><div class="av">DC</div><div><p class="pn">Demo Dental Clinic</p><p class="ps" id="ps">online</p></div></div>
+        <div class="phone-chat">
+          <p class="b b-in" id="sIn">Namaskara, teeth cleaning ge appointment beku, Saturday sigutha?<time>13:55</time></p>
+          <div class="b b-type" id="sType"><i></i><i></i><i></i></div>
+          <p class="b b-out" id="sOut">Namaskara! Demo Dental Clinic ninda. Saturday teeth cleaning appointment bagge namma team confirm maduttaare. Nimma hesaru enu?<time>13:56</time></p>
         </div>
       </div>
-      <div class="chat" id="chat" aria-live="off"></div>
-      <div class="phone-input" aria-hidden="true"><span>Message</span></div>
+      <div class="chips">
+        <span class="chip" style="--x:-210px;--y:-150px"><b>Language</b>Kannada</span>
+        <span class="chip" style="--x:190px;--y:-90px"><b>Wants</b>Teeth cleaning</span>
+        <span class="chip" style="--x:-230px;--y:40px"><b>When</b>Saturday</span>
+        <span class="chip" style="--x:200px;--y:110px"><b>Urgency</b>Normal</span>
+      </div>
+      <div class="lead" id="lead">
+        <p class="lead-h">New leads <span>Today</span></p>
+        <div class="lead-row lead-new"><b>Teeth cleaning, Saturday</b><span>Kannada · Appointment</span><em>Call to confirm a Saturday slot</em></div>
+        <div class="lead-row"><b>Root canal price, Sunday timings</b><span>Kanglish · Price question</span></div>
+      </div>
     </div>
-    <div class="note-card" id="noteCard" aria-hidden="true">
-      <p class="mono">New lead for the owner</p>
-      <p id="noteText">Wants root canal price, asked about Sunday timings.</p>
-      <div class="tags"><span id="tagIntent">Price question</span><span id="tagLang">Kanglish</span></div>
-    </div>
   </div>
+  <p class="story-note">Messages and replies above are real, from our demo line on 13 November 2026. The clinic name is a placeholder.</p>
 </section>
 
-<!-- STRIP -->
-<section class="strip reveal">
-  <p>Built for clinics, dentists, coaching centres, gyms, salons, homestays, restaurants and home-service trades.</p>
-</section>
-
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="section-head reveal">
-    <p class="eyebrow">What we build</p>
-    <h2>Three things, done properly.</h2>
+<!-- WORKFLOW GRAPH -->
+<section class="graph-sec">
+  <div class="sec-head">
+    <p class="kicker">Under the hood</p>
+    <h2 class="h-big">Built on systems you can <em>see.</em></h2>
+    <p class="sub">Every automation is a visible workflow, monitored with error alerts and handed over with notes. Nothing is a black box.</p>
   </div>
-  <div class="services">
-    <article class="service reveal">
-      <p class="num mono">01</p>
-      <h3>Websites</h3>
-      <p>Fast, hand-built sites with your real photos, real reviews and a clear way to call or book. We build a free sample homepage first. You pay only if you want it live.</p>
-      <ul class="mono"><li>Custom design</li><li>Mobile first</li><li>Your own domain</li></ul>
-    </article>
-    <article class="service reveal">
-      <p class="num mono">02</p>
-      <h3>WhatsApp enquiry assistant</h3>
-      <p>Reads every incoming message, works out what the customer wants, replies in their language within seconds and gives you a list of new leads. It never invents prices or timings.</p>
-      <ul class="mono"><li>English, Kannada, Hindi</li><li>Lead list for the owner</li><li>Official WhatsApp API</li></ul>
-    </article>
-    <article class="service reveal">
-      <p class="num mono">03</p>
-      <h3>Custom automation &amp; AI</h3>
-      <p>Support-ticket triage for online stores, lead alerts, reports and internal tools. Built on n8n with Gemini or Claude, monitored with error alerts and handed over with notes.</p>
-      <ul class="mono"><li>n8n workflows</li><li>Gemini and Claude</li><li>Shopify and helpdesks</li></ul>
-    </article>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how">
-  <div class="section-head reveal">
-    <p class="eyebrow">How the WhatsApp assistant works</p>
-    <h2>From message to reply, <em>in seconds.</em></h2>
-  </div>
-  <div class="flow reveal" id="flow">
-    <svg class="flow-line" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
-      <line x1="40" y1="20" x2="960" y2="20" class="track"/>
-      <line x1="40" y1="20" x2="960" y2="20" class="pulse"/>
+  <div class="graph" id="graph">
+    <svg viewBox="0 0 1100 300" class="graph-svg" role="img" aria-label="Workflow: WhatsApp message, text check, AI reply, send reply, lead list, error alerts">
+      <path class="g-path" d="M150 110 H330"/>
+      <path class="g-path" d="M450 110 H630"/>
+      <path class="g-path" d="M750 110 H930"/>
+      <path class="g-path" d="M690 150 V215 H930"/>
+      <path class="g-path g-dash" d="M390 150 V250 H570"/>
+      <circle class="g-flow" r="5"><animateMotion dur="3.2s" repeatCount="indefinite" path="M150 110 H330 M450 110 H630 M750 110 H930"/></circle>
+      <g class="g-node" transform="translate(30 70)"><rect width="120" height="80" rx="10"/><text x="60" y="36">WhatsApp</text><text x="60" y="56" class="t2">message in</text></g>
+      <g class="g-node" transform="translate(330 70)"><rect width="120" height="80" rx="10"/><text x="60" y="36">Text only?</text><text x="60" y="56" class="t2">skip receipts</text></g>
+      <g class="g-node g-ai" transform="translate(630 70)"><rect width="120" height="80" rx="10"/><text x="60" y="36">AI reads</text><text x="60" y="56" class="t2">Gemini or Claude</text></g>
+      <g class="g-node" transform="translate(930 70)"><rect width="140" height="80" rx="10"/><text x="70" y="36">Send reply</text><text x="70" y="56" class="t2">same language</text></g>
+      <g class="g-node" transform="translate(930 180)"><rect width="140" height="70" rx="10"/><text x="70" y="40">Lead list</text></g>
+      <g class="g-node g-alert" transform="translate(570 215)"><rect width="140" height="70" rx="10"/><text x="70" y="40">Error alert</text></g>
     </svg>
-    <ol class="steps">
-      <li class="step"><span class="dot"></span><p class="mono">01</p><h4>Message arrives</h4><p>A customer writes to your WhatsApp Business number, any time of day.</p></li>
-      <li class="step"><span class="dot"></span><p class="mono">02</p><h4>AI reads it</h4><p>It spots the language, what they want and how urgent it is.</p></li>
-      <li class="step"><span class="dot"></span><p class="mono">03</p><h4>Reply goes out</h4><p>A short, polite reply in the same language, from your business name.</p></li>
-      <li class="step"><span class="dot"></span><p class="mono">04</p><h4>You get the lead</h4><p>Name, need and a suggested next step, ready for you or your team.</p></li>
-    </ol>
   </div>
 </section>
 
-<!-- REAL CONVERSATIONS -->
-<section class="section proof">
-  <div class="section-head reveal">
-    <p class="eyebrow">Real replies, not mock-ups</p>
-    <h2>Two messages to our demo line.</h2>
-    <p class="sub">Sent on 13 November 2026. The clinic name is a placeholder; the replies are exactly what the system wrote.</p>
+<!-- WEBSITES: self-assembling page -->
+<section class="sites" id="websites">
+  <div class="sites-copy">
+    <p class="kicker">Websites</p>
+    <h2 class="h-big">Designed from a blank page, <em>not a template.</em></h2>
+    <p class="sub">Your real photos, your real reviews, and a clear way to call or book. We build a free sample homepage first, so you see your site before you pay for it.</p>
+    <ul class="ticks"><li>Custom design for your business</li><li>Fast on mobile data</li><li>Your own domain, privacy and terms pages</li></ul>
   </div>
-  <div class="convos">
-    <figure class="convo reveal">
-      <p class="bubble in">Hi, root canal cost how much? Sunday open aa?</p>
-      <p class="bubble out">Hi! Welcome to Demo Dental Clinic. Root canal cost matte Sunday timings bagge namma team confirm madtare. Could you please tell us your name?</p>
-      <figcaption class="mono">Kanglish in, Kanglish out · Price question</figcaption>
-    </figure>
-    <figure class="convo reveal">
-      <p class="bubble in">Namaskara, teeth cleaning ge appointment beku, Saturday sigutha?</p>
-      <p class="bubble out">Namaskara! Demo Dental Clinic ninda. Saturday teeth cleaning appointment bagge namma team confirm maduttaare. Nimma hesaru enu?</p>
-      <figcaption class="mono">Kannada in, Kannada out · Appointment</figcaption>
-    </figure>
+  <div class="browser" id="browser" aria-hidden="true">
+    <div class="br-bar"><i></i><i></i><i></i><span>yourbusiness.com</span></div>
+    <div class="br-page">
+      <div class="bp-nav"><span class="bp-logo"></span><span class="bp-l"></span><span class="bp-l"></span><span class="bp-btn"></span></div>
+      <div class="bp-hero">
+        <div class="bp-text"><span class="bp-h">Same-day plumbing</span><span class="bp-h">across Mysuru.</span><span class="bp-p"></span><span class="bp-p short"></span><span class="bp-cta">Call now</span></div>
+        <div class="bp-img"></div>
+      </div>
+      <div class="bp-cards"><span></span><span></span><span></span></div>
+    </div>
+    <p class="br-label">Illustration of how a sample homepage comes together.</p>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="section" id="process">
-  <div class="section-head reveal">
-    <p class="eyebrow">Process</p>
-    <h2>You see it working <em>before</em> you pay.</h2>
-  </div>
-  <ol class="process">
-    <li class="reveal"><p class="mono">01</p><h3>Free sample</h3><p>We study your business and build a working sample using only your public details: a homepage, or a demo assistant that answers like your front desk.</p></li>
-    <li class="reveal"><p class="mono">02</p><h3>Scope and price</h3><p>No fixed packages. We agree what to build and a price that fits the size of your business.</p></li>
-    <li class="reveal"><p class="mono">03</p><h3>Build and launch</h3><p>Your domain, your WhatsApp number, privacy and terms pages, and testing on real phones before anything goes live.</p></li>
-    <li class="reveal"><p class="mono">04</p><h3>Look after it</h3><p>A monthly plan for fixes, updates and monitoring. If something breaks, we get an alert straight away.</p></li>
+<!-- SERVICES LIST -->
+<section class="services" id="services">
+  <p class="kicker">What we build</p>
+  <ol class="svc">
+    <li><span class="svc-n">01</span><h3>Websites</h3><p>Hand-built sites for clinics, coaching centres, gyms, salons, homestays, restaurants and home-service trades.</p></li>
+    <li><span class="svc-n">02</span><h3>WhatsApp assistant</h3><p>Instant replies in English, Kannada or Hindi, with a daily list of new leads for the owner.</p></li>
+    <li><span class="svc-n">03</span><h3>Automation &amp; AI</h3><p>Support-ticket triage for online stores, lead alerts, reports and internal tools, built on n8n with Gemini or Claude.</p></li>
   </ol>
 </section>
 
-<!-- AGENCIES -->
-<section class="section agencies" id="agencies">
-  <div class="agency-card reveal">
-    <div>
-      <p class="eyebrow">For marketing and web agencies</p>
-      <h2>Sell it under <em>your</em> name.</h2>
-    </div>
-    <div class="agency-copy">
-      <p>Add WhatsApp automation to what you already offer clients. You set the price and own the relationship. We build it for a fixed fee and stay in the background.</p>
-      <p>We set up the first one free for one of your clients, so you can see it working before you sell it.</p>
-      <a class="btn" href="https://wa.me/918762553585?text=Hi%2C%20I%27m%20from%20an%20agency%20and%20would%20like%20to%20see%20the%20white-label%20demo." target="_blank" rel="noopener">Book a 15-minute demo</a>
-    </div>
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="sec-head">
+    <p class="kicker">Process</p>
+    <h2 class="h-big">You see it working <em>before</em> you pay.</h2>
+  </div>
+  <div class="steps">
+    <div class="step-line"><span id="stepFill"></span></div>
+    <div class="step"><span class="step-n">01</span><h3>Free sample</h3><p>A working homepage or demo assistant, built from your public details only.</p></div>
+    <div class="step"><span class="step-n">02</span><h3>Scope and price</h3><p>No fixed packages. A price that fits the size of your business.</p></div>
+    <div class="step"><span class="step-n">03</span><h3>Build and launch</h3><p>Your domain, your number, tested on real phones before it goes live.</p></div>
+    <div class="step"><span class="step-n">04</span><h3>Look after it</h3><p>A monthly plan for fixes and updates, with error alerts if anything breaks.</p></div>
   </div>
 </section>
 
-<!-- ABOUT + CONTACT -->
-<section class="section contact" id="contact">
-  <div class="reveal">
-    <p class="eyebrow">Studio AXD</p>
-    <h2 class="big">Tell us what you'd like <em>off your plate.</em></h2>
-    <p class="sub">Studio AXD is run by Anmol Prasad in Mysuru. The person you talk to is the person who builds and checks your project.</p>
+<!-- AGENCIES -->
+<section class="agencies" id="agencies">
+  <p class="kicker light">For marketing and web agencies</p>
+  <h2 class="h-big">Sell it under <em>your</em> name.</h2>
+  <div class="ag-grid">
+    <p>Add WhatsApp automation to what you already offer. You set the price and own the client. We build for a fixed fee and stay in the background.</p>
+    <p>We set up the first one free for one of your clients, so you see it working before you sell it.</p>
   </div>
-  <div class="contact-grid reveal">
-    <a class="contact-item" href="https://wa.me/918762553585" target="_blank" rel="noopener">
-      <span class="mono">WhatsApp</span><span>+91 87625 53585</span>
-    </a>
-    <a class="contact-item" href="mailto:anmolaxd@gmail.com">
-      <span class="mono">Email</span><span>anmolaxd@gmail.com</span>
-    </a>
-    <div class="contact-item">
-      <span class="mono">Studio</span><span>Srirampura, Mysuru, Karnataka</span>
-    </div>
+  <a class="btn btn-light" href="https://wa.me/918762553585?text=Hi%2C%20I%27m%20from%20an%20agency%20and%20would%20like%20to%20see%20the%20white-label%20demo." target="_blank" rel="noopener">Book a 15-minute demo <span class="arrow" aria-hidden="true">→</span></a>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="kicker">Start with a free sample</p>
+  <h2 class="mega"><a href="https://wa.me/918762553585" target="_blank" rel="noopener">Let's <em>talk.</em></a></h2>
+  <div class="c-grid">
+    <a href="https://wa.me/918762553585" target="_blank" rel="noopener"><span>WhatsApp</span>+91 87625 53585</a>
+    <a href="mailto:hello.studioaxd@gmail.com"><span>Email</span>hello.studioaxd@gmail.com</a>
+    <p><span>Studio</span>Mysuru, Karnataka</p>
   </div>
+  <p class="about">Studio AXD is run by Anmol Prasad. The person you talk to is the person who builds and checks your project.</p>
 </section>
 
 </main>
 
 <footer class="footer">
-  <p class="wordmark">Studio <span>AXD</span></p>
-  <p>© 2026 Studio AXD. Srirampura, Mysuru, Karnataka 570023, India.</p>
+  <p class="wordmark">Studio<span>AXD</span></p>
+  <p>© 2026 Studio AXD. Mysuru, Karnataka, India.</p>
   <nav aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="main.js"></script>
 </body>
 </html>
