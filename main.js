@@ -136,6 +136,8 @@
   gsap.utils.toArray('.h-big, .sub, .ticks li, .ag-grid p').forEach((el) => {
     gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: E, scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
+  gsap.from('.build', { opacity: 0, y: 40, duration: 1.1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.build-grid', start: 'top 82%' } });
+  gsap.from('.pre-mega', { opacity: 0, y: 20, duration: 1, ease: E, scrollTrigger: { trigger: '.pre-mega', start: 'top 90%' } });
   gsap.from('.svc li', { opacity: 0, y: 50, duration: 1.1, ease: E, stagger: 0.12, scrollTrigger: { trigger: '.svc', start: 'top 80%' } });
   gsap.to('#stepFill', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 80%', end: 'bottom 60%', scrub: 0.5 } });
   gsap.from('.step', { opacity: 0, y: 30, duration: 1, ease: E, stagger: 0.15, scrollTrigger: { trigger: '.steps', start: 'top 80%' } });

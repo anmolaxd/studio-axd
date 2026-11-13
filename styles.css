@@ -164,7 +164,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .br-label { font: 11px var(--mono); color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--line); }
 
 /* SERVICES */
-.services { padding: 0 var(--g) clamp(80px, 10vw, 140px); }
+.services { padding: clamp(80px, 10vw, 150px) var(--g); }
 .svc { list-style: none; border-top: 1px solid var(--ink); }
 .svc li { display: grid; grid-template-columns: 80px 1fr 1.2fr; gap: 24px; align-items: baseline; padding: 34px 0; border-bottom: 1px solid var(--line); transition: padding .4s var(--ease); }
 .svc li:hover { padding-left: 16px; }
@@ -229,6 +229,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   .scroll-cue { display: none; }
 }
 @media (max-width: 600px) {
+  .hero-title { font-size: 10.6vw; letter-spacing: -.05em; }
   .phone { width: 280px; height: 540px; }
   .stage { height: 580px; }
   .chip { font-size: 12px; }
@@ -237,3 +238,16 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   .c-grid > * + * { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
   .cta-row { flex-wrap: wrap; }
 }
+
+/* RECENT BUILDS */
+.builds { padding: clamp(80px, 10vw, 150px) var(--g); border-top: 1px solid var(--line); }
+.build-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.build { background: var(--paper); padding: clamp(28px, 3vw, 44px); display: flex; flex-direction: column; gap: 12px; min-height: 260px; transition: background .4s var(--ease); }
+a.build:hover { background: #fff; }
+.build h3 { font-size: clamp(26px, 2.6vw, 40px); font-weight: 500; letter-spacing: -.03em; line-height: 1.05; }
+.build p { color: var(--muted); max-width: 440px; }
+.tag { font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.build-link { margin-top: auto; font-weight: 500; font-size: 15px; }
+a.build:hover .build-link { color: var(--accent); }
+.pre-mega { font-size: clamp(20px, 2vw, 28px); letter-spacing: -.02em; max-width: 620px; margin-bottom: 20px; }
+@media (max-width: 760px) { .build-grid { grid-template-columns: 1fr; } .build { min-height: 0; } }
