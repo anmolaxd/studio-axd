@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio AXD | Websites and WhatsApp automation for local businesses</title>
+<meta name="description" content="Studio AXD designs websites for local businesses and builds the WhatsApp and AI systems behind them, so every enquiry gets a reply in seconds, in English, Kannada or Hindi. Based in Mysuru.">
+<meta property="og:title" content="Studio AXD">
+<meta property="og:description" content="Websites that bring the enquiry in. Automations that answer it.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav" id="top">
+  <a class="wordmark" href="#top" aria-label="Studio AXD home">Studio <span>AXD</span></a>
+  <nav aria-label="Main">
+    <a href="#services">Services</a>
+    <a href="#how">How it works</a>
+    <a href="#process">Process</a>
+    <a href="#agencies">For agencies</a>
+  </nav>
+  <a class="btn btn-small" href="https://wa.me/918762553585" target="_blank" rel="noopener">WhatsApp us</a>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow reveal-load" style="--d:0">Studio AXD · Mysuru, India</p>
+    <h1>
+      <span class="line"><span style="--d:1">Websites that bring</span></span>
+      <span class="line"><span style="--d:2">the enquiry in.</span></span>
+      <span class="line"><span style="--d:3"><em>Automations that</em></span></span>
+      <span class="line"><span style="--d:4"><em>answer it.</em></span></span>
+    </h1>
+    <p class="lede reveal-load" style="--d:5">We design websites for local businesses and build the WhatsApp and AI systems behind them, so every customer gets a reply in seconds, in English, Kannada or Hindi.</p>
+    <div class="cta-row reveal-load" style="--d:6">
+      <a class="btn" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-visual reveal-load" style="--d:3" aria-label="Animated example of a WhatsApp enquiry getting an instant reply">
+    <div class="phone">
+      <div class="phone-top">
+        <div class="avatar" aria-hidden="true">DC</div>
+        <div>
+          <p class="chat-name">Demo Dental Clinic</p>
+          <p class="chat-status" id="chatStatus">online</p>
+        </div>
+      </div>
+      <div class="chat" id="chat" aria-live="off"></div>
+      <div class="phone-input" aria-hidden="true"><span>Message</span></div>
+    </div>
+    <div class="note-card" id="noteCard" aria-hidden="true">
+      <p class="mono">New lead for the owner</p>
+      <p id="noteText">Wants root canal price, asked about Sunday timings.</p>
+      <div class="tags"><span id="tagIntent">Price question</span><span id="tagLang">Kanglish</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<section class="strip reveal">
+  <p>Built for clinics, dentists, coaching centres, gyms, salons, homestays, restaurants and home-service trades.</p>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-head reveal">
+    <p class="eyebrow">What we build</p>
+    <h2>Three things, done properly.</h2>
+  </div>
+  <div class="services">
+    <article class="service reveal">
+      <p class="num mono">01</p>
+      <h3>Websites</h3>
+      <p>Fast, hand-built sites with your real photos, real reviews and a clear way to call or book. We build a free sample homepage first. You pay only if you want it live.</p>
+      <ul class="mono"><li>Custom design</li><li>Mobile first</li><li>Your own domain</li></ul>
+    </article>
+    <article class="service reveal">
+      <p class="num mono">02</p>
+      <h3>WhatsApp enquiry assistant</h3>
+      <p>Reads every incoming message, works out what the customer wants, replies in their language within seconds and gives you a list of new leads. It never invents prices or timings.</p>
+      <ul class="mono"><li>English, Kannada, Hindi</li><li>Lead list for the owner</li><li>Official WhatsApp API</li></ul>
+    </article>
+    <article class="service reveal">
+      <p class="num mono">03</p>
+      <h3>Custom automation &amp; AI</h3>
+      <p>Support-ticket triage for online stores, lead alerts, reports and internal tools. Built on n8n with Gemini or Claude, monitored with error alerts and handed over with notes.</p>
+      <ul class="mono"><li>n8n workflows</li><li>Gemini and Claude</li><li>Shopify and helpdesks</li></ul>
+    </article>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-head reveal">
+    <p class="eyebrow">How the WhatsApp assistant works</p>
+    <h2>From message to reply, <em>in seconds.</em></h2>
+  </div>
+  <div class="flow reveal" id="flow">
+    <svg class="flow-line" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="40" y1="20" x2="960" y2="20" class="track"/>
+      <line x1="40" y1="20" x2="960" y2="20" class="pulse"/>
+    </svg>
+    <ol class="steps">
+      <li class="step"><span class="dot"></span><p class="mono">01</p><h4>Message arrives</h4><p>A customer writes to your WhatsApp Business number, any time of day.</p></li>
+      <li class="step"><span class="dot"></span><p class="mono">02</p><h4>AI reads it</h4><p>It spots the language, what they want and how urgent it is.</p></li>
+      <li class="step"><span class="dot"></span><p class="mono">03</p><h4>Reply goes out</h4><p>A short, polite reply in the same language, from your business name.</p></li>
+      <li class="step"><span class="dot"></span><p class="mono">04</p><h4>You get the lead</h4><p>Name, need and a suggested next step, ready for you or your team.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- REAL CONVERSATIONS -->
+<section class="section proof">
+  <div class="section-head reveal">
+    <p class="eyebrow">Real replies, not mock-ups</p>
+    <h2>Two messages to our demo line.</h2>
+    <p class="sub">Sent on 13 November 2026. The clinic name is a placeholder; the replies are exactly what the system wrote.</p>
+  </div>
+  <div class="convos">
+    <figure class="convo reveal">
+      <p class="bubble in">Hi, root canal cost how much? Sunday open aa?</p>
+      <p class="bubble out">Hi! Welcome to Demo Dental Clinic. Root canal cost matte Sunday timings bagge namma team confirm madtare. Could you please tell us your name?</p>
+      <figcaption class="mono">Kanglish in, Kanglish out · Price question</figcaption>
+    </figure>
+    <figure class="convo reveal">
+      <p class="bubble in">Namaskara, teeth cleaning ge appointment beku, Saturday sigutha?</p>
+      <p class="bubble out">Namaskara! Demo Dental Clinic ninda. Saturday teeth cleaning appointment bagge namma team confirm maduttaare. Nimma hesaru enu?</p>
+      <figcaption class="mono">Kannada in, Kannada out · Appointment</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="section-head reveal">
+    <p class="eyebrow">Process</p>
+    <h2>You see it working <em>before</em> you pay.</h2>
+  </div>
+  <ol class="process">
+    <li class="reveal"><p class="mono">01</p><h3>Free sample</h3><p>We study your business and build a working sample using only your public details: a homepage, or a demo assistant that answers like your front desk.</p></li>
+    <li class="reveal"><p class="mono">02</p><h3>Scope and price</h3><p>No fixed packages. We agree what to build and a price that fits the size of your business.</p></li>
+    <li class="reveal"><p class="mono">03</p><h3>Build and launch</h3><p>Your domain, your WhatsApp number, privacy and terms pages, and testing on real phones before anything goes live.</p></li>
+    <li class="reveal"><p class="mono">04</p><h3>Look after it</h3><p>A monthly plan for fixes, updates and monitoring. If something breaks, we get an alert straight away.</p></li>
+  </ol>
+</section>
+
+<!-- AGENCIES -->
+<section class="section agencies" id="agencies">
+  <div class="agency-card reveal">
+    <div>
+      <p class="eyebrow">For marketing and web agencies</p>
+      <h2>Sell it under <em>your</em> name.</h2>
+    </div>
+    <div class="agency-copy">
+      <p>Add WhatsApp automation to what you already offer clients. You set the price and own the relationship. We build it for a fixed fee and stay in the background.</p>
+      <p>We set up the first one free for one of your clients, so you can see it working before you sell it.</p>
+      <a class="btn" href="https://wa.me/918762553585?text=Hi%2C%20I%27m%20from%20an%20agency%20and%20would%20like%20to%20see%20the%20white-label%20demo." target="_blank" rel="noopener">Book a 15-minute demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + CONTACT -->
+<section class="section contact" id="contact">
+  <div class="reveal">
+    <p class="eyebrow">Studio AXD</p>
+    <h2 class="big">Tell us what you'd like <em>off your plate.</em></h2>
+    <p class="sub">Studio AXD is run by Anmol Prasad in Mysuru. The person you talk to is the person who builds and checks your project.</p>
+  </div>
+  <div class="contact-grid reveal">
+    <a class="contact-item" href="https://wa.me/918762553585" target="_blank" rel="noopener">
+      <span class="mono">WhatsApp</span><span>+91 87625 53585</span>
+    </a>
+    <a class="contact-item" href="mailto:anmolaxd@gmail.com">
+      <span class="mono">Email</span><span>anmolaxd@gmail.com</span>
+    </a>
+    <div class="contact-item">
+      <span class="mono">Studio</span><span>Srirampura, Mysuru, Karnataka</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p class="wordmark">Studio <span>AXD</span></p>
+  <p>© 2026 Studio AXD. Srirampura, Mysuru, Karnataka 570023, India.</p>
+  <nav aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
