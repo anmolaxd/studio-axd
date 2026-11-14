@@ -277,3 +277,10 @@ a.build:hover .build-link { color: var(--accent); }
 .case-facts dt { font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
 .case-facts dd { margin: 4px 0 0; font-size: 17px; }
 @media (max-width: 860px) { .case { grid-template-columns: 1fr; } }
+/* Phones: case card runs edge to edge so the text column is not squeezed by page margin + card padding */
+@media (max-width: 600px) {
+  .case { margin-left: calc(-1 * var(--g)); margin-right: calc(-1 * var(--g)); padding: 40px var(--g); gap: 32px; }
+  .case h3 { font-size: 27px; }
+  .case .tag { display: block; line-height: 1.6; }
+  .case-facts dd { font-size: 16px; }
+}

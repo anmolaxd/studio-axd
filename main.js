@@ -133,7 +133,7 @@
     .from('.bp-cards span', { opacity: 0, y: 30, stagger: 0.1, duration: 0.5 }, 1.3);
 
   /* ---------- 6. Headings, services, process, contact ---------- */
-  gsap.utils.toArray('.h-big, .sub, .ticks li, .ag-grid p').forEach((el) => {
+  gsap.utils.toArray('.h-big, .sub, .ticks li:not(.case li), .ag-grid p').forEach((el) => {
     gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: E, scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   gsap.from('.build', { opacity: 0, y: 40, duration: 1.1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.build-grid', start: 'top 82%' } });
