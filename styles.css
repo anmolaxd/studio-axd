@@ -260,3 +260,8 @@ a.build:hover .build-link { color: var(--accent); }
 .logo-sub { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; font-size: .5em; margin-left: .3em; align-self: flex-end; margin-bottom: .05em; color: var(--muted); }
 
 .footer .logo { font-size: 22px; }
+/* Portrait tablets: the screen is much taller than the hero text, so don't force full height (left a blank top half) */
+@media (orientation: portrait) and (min-width: 601px) and (max-width: 1100px) {
+  .hero { min-height: 0; padding-top: 170px; padding-bottom: 90px; }
+  .hero-title { font-size: 10.6vw; }
+}
