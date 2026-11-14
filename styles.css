@@ -265,3 +265,4 @@ a.build:hover .build-link { color: var(--accent); }
   .hero { min-height: 0; padding-top: 170px; padding-bottom: 90px; }
   .hero-title { font-size: 10.6vw; }
 }
+.nav .logo-sub { display: none; }  /* top bar shows just AXD; footer keeps "studio" */
