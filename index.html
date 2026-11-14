@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=3">
 <script>
   // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
@@ -51,7 +51,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <p class="kicker k-anim">Websites &nbsp;/&nbsp; Software &nbsp;/&nbsp; Automation &nbsp;/&nbsp; AI &nbsp;·&nbsp; Mysuru, India</p>
+  <p class="kicker k-anim">Websites &nbsp;/&nbsp; Software &nbsp;/&nbsp; Automation &nbsp;/&nbsp; AI<span class="kick-dot"> &nbsp;·&nbsp;</span> <span style="white-space: nowrap;">Mysuru, India</span></p>
   <h1 class="hero-title" aria-label="We build websites and automate the busywork.">
     <span class="row"><span class="w">We</span> <span class="w">build</span> <span class="w">websites</span></span>
     <span class="row"><span class="w">and</span> <span class="w">automate</span> <span class="w">the</span></span>
@@ -134,6 +134,7 @@
     <h2 class="h-big">Built on systems you can <em>see.</em></h2>
     <p class="sub">Every automation is a visible workflow, monitored with error alerts and handed over with notes. Nothing is a black box.</p>
   </div>
+  <p class="graph-hint">Swipe to see the full workflow →</p>
   <div class="graph" id="graph">
     <svg viewBox="0 0 1100 300" class="graph-svg" role="img" aria-label="Workflow: WhatsApp message, text check, AI reply, send reply, lead list, error alerts">
       <path class="g-path" d="M150 110 H330"/>

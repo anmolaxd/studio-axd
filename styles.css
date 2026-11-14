@@ -3,9 +3,9 @@
   --paper-2: #c4e8ee; /* was #ebe7dd */
   --ink: #121211;
   --ink-2: #2a2926;
-  --muted: #4b6670; /* was #6d695f */
+  --muted: #284650; /* darker so it stays readable on the sea blue */
   /* light and deep sea blue mixed; deepest tone kept mid so dark text stays readable over it */
-  --sea-mix: radial-gradient(ellipse 70% 60% at 100% 0%, #2f8399 0%, transparent 70%), radial-gradient(ellipse 60% 70% at 0% 100%, #2f8399 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 30% 20%, #e8f8fa 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 80%, #8fd3df 0%, transparent 70%), #bfe7ee;
+  --sea-mix: radial-gradient(ellipse 70% 60% at 100% 0%, #4fa6b9 0%, transparent 70%), radial-gradient(ellipse 60% 70% at 0% 100%, #4fa6b9 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 30% 20%, #e8f8fa 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 80%, #8fd3df 0%, transparent 70%), #bfe7ee;
   --sea-deep: linear-gradient(160deg, #0a3442 0%, #0f5a6b 100%);
   --line: rgba(18, 18, 17, 0.12);
   --accent: #ff4f1f;
@@ -51,7 +51,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .wordmark { font-weight: 600; font-size: 18px; letter-spacing: -.02em; display: inline-flex; gap: 4px; align-items: baseline; }
 
 .nav nav { display: flex; gap: 32px; font-size: 15px; color: var(--muted); }
+.nav nav a { padding: 10px 0; }  /* bigger tap area on tablets */
 .nav nav a:hover { color: var(--ink); }
+@media (max-width: 600px) { .kick-dot { display: none; } }
 
 /* INTRO (first visit only, shown by JS) */
 .intro { display: none; }
@@ -132,7 +134,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .graph-sec { padding: clamp(80px, 10vw, 160px) var(--g); background: var(--sea-deep); color: var(--paper); }
 .graph-sec .kicker, .graph-sec .sub { color: rgba(244,241,234,.6); }
 .graph { overflow-x: auto; }
-.graph-svg { width: 100%; min-width: 760px; height: auto; display: block; }
+.graph-svg { width: 100%; min-width: 0; height: auto; display: block; }
 .g-path { fill: none; stroke: rgba(244,241,234,.35); stroke-width: 1.5; }
 .g-dash { stroke-dasharray: 5 6; stroke: rgba(255,79,31,.6); }
 .g-flow { fill: var(--accent); }
@@ -206,6 +208,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 /* FOOTER */
 .footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 28px var(--g); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 .footer nav { display: flex; gap: 24px; }
+.footer nav a { padding: 12px 0; }  /* bigger tap area on phones */
+.graph-hint { display: none; margin-top: 12px; font: 12px var(--mono); color: rgba(244,241,234,.6); }
+@media (max-width: 600px) { .graph-svg { min-width: 760px; } .graph-hint { display: block; } }
 .footer a:hover { color: var(--ink); }
 
 /* LEGAL PAGES */
