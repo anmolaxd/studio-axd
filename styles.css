@@ -266,3 +266,14 @@ a.build:hover .build-link { color: var(--accent); }
   .hero-title { font-size: 10.6vw; }
 }
 .nav .logo-sub { display: none; }  /* top bar shows just AXD; footer keeps "studio" */
+/* CASE STUDY (client work, above the demo grid) */
+.case { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(32px, 5vw, 80px); padding: clamp(28px, 4vw, 56px); margin-bottom: 1px; background: var(--ink); color: var(--paper); }
+.case h3 { font-size: clamp(28px, 3vw, 46px); font-weight: 500; letter-spacing: -.03em; line-height: 1.05; margin: 12px 0 16px; }
+.case-copy > p { color: rgba(244,241,234,.72); max-width: 560px; }
+.case .ticks { margin-top: 24px; }
+.case-also { margin-top: 24px; font-size: 15px; }
+.case-facts { align-self: end; border-top: 1px solid rgba(244,241,234,.25); }
+.case-facts div { padding: 16px 0; border-bottom: 1px solid rgba(244,241,234,.15); }
+.case-facts dt { font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.case-facts dd { margin: 4px 0 0; font-size: 17px; }
+@media (max-width: 860px) { .case { grid-template-columns: 1fr; } }
