@@ -33,11 +33,12 @@
     document.body.style.overflow = 'hidden';
     const out = document.getElementById('introOut');
     const words = 'Namaskara! Demo Dental Clinic ninda. Saturday teeth cleaning appointment bagge namma team confirm maduttaare. Nimma hesaru enu?'.split(' ');
+    // kept short (~1.5s): a longer intro made the site feel slow to open
     const tl = gsap.timeline({ onComplete: endIntro });
-    tl.to('#introIn', { opacity: 1, y: 0, duration: 0.6, ease: E, delay: 0.3 })
-      .to(out, { opacity: 1, duration: 0.3 }, '+=0.5');
-    words.forEach((w) => tl.call(() => { out.textContent += (out.textContent ? ' ' : '') + w; }, null, '+=0.07'));
-    tl.to(intro, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: 'expo.inOut' }, '+=0.7');
+    tl.to('#introIn', { opacity: 1, y: 0, duration: 0.35, ease: E })
+      .to(out, { opacity: 1, duration: 0.2 }, '+=0.1');
+    words.forEach((w) => tl.call(() => { out.textContent += (out.textContent ? ' ' : '') + w; }, null, '+=0.025'));
+    tl.to(intro, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.5, ease: 'expo.inOut' }, '+=0.15');
     document.getElementById('introSkip').addEventListener('click', () => { tl.kill(); endIntro(); });
     function endIntro() {
       intro.classList.remove('play');
