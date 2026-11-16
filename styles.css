@@ -198,12 +198,11 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .mega em { color: var(--accent); }
 .mega a { display: inline-block; transition: transform .5s var(--ease); }
 .mega a:hover { transform: translateX(12px); }
-.c-grid { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 64px; border-top: 1px solid var(--ink); }
+.c-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 64px; border-top: 1px solid var(--ink); }
 .c-grid > * { padding: 24px 24px 24px 0; font-size: clamp(17px, 1.6vw, 22px); display: flex; flex-direction: column; gap: 6px; overflow-wrap: anywhere; }
 .c-grid > * + * { padding-left: 24px; border-left: 1px solid var(--line); }
 .c-grid span { font: 12px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .c-grid a:hover { color: var(--accent); }
-.about { color: var(--muted); margin-top: 40px; max-width: 520px; }
 
 /* FOOTER */
 .footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 28px var(--g); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
