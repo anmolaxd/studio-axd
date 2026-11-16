@@ -3,7 +3,41 @@
   const root = document.documentElement;
   const motion = root.classList.contains('motion');
   const nav = document.querySelector('.nav');
-  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive: true });
+
+  // Top bar: frosts after 10px; on phones it slides away while scrolling down and returns on the way up.
+  const darkSecs = [...document.querySelectorAll('.agencies, .case')];
+  let lastY = scrollY;
+  const onScroll = () => {
+    const y = scrollY;
+    nav.classList.toggle('scrolled', y > 10);
+    nav.classList.toggle('on-dark', darkSecs.some((el) => { const r = el.getBoundingClientRect(); return r.top <= 36 && r.bottom >= 36; }));
+    if (!nav.classList.contains('open')) {
+      if (y > 160 && y > lastY + 4) nav.classList.add('hide');
+      else if (y < lastY - 4 || y <= 160) nav.classList.remove('hide');
+    }
+    lastY = y;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Phone menu: Menu button opens a full-screen panel; a link tap, Escape or widening the screen closes it.
+  const menuBtn = document.querySelector('.menu-btn');
+  const mnav = document.getElementById('mnav');
+  if (menuBtn && mnav) {
+    const setMenu = (open) => {
+      root.classList.toggle('menu-open', open);
+      nav.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuBtn.querySelector('.menu-txt').textContent = open ? 'Close' : 'Menu';
+      mnav.inert = !open;
+    };
+    setMenu(false);
+    menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+    mnav.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); menuBtn.focus(); } });
+    matchMedia('(min-width: 961px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
+  }
 
   // No motion wanted, or GSAP failed to load: show the static page.
   if (!motion || !window.gsap || !window.ScrollTrigger) {

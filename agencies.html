@@ -18,9 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 <script>
   // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
+  document.documentElement.classList.add('js');
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
 </script>
 </head>
@@ -36,7 +37,24 @@
     <a href="agencies.html" aria-current="page">Agencies</a>
   </nav>
   <a class="btn btn-small" href="https://wa.me/918762553585" target="_blank" rel="noopener">WhatsApp us</a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span class="menu-txt">Menu</span><span class="menu-ico" aria-hidden="true"><i></i><i></i></span></button>
 </header>
+
+<!-- PHONE MENU (opened by the Menu button; desktop uses the top bar links) -->
+<div class="mnav" id="mnav">
+  <nav aria-label="Menu">
+    <a href="index.html#services" style="--i:0"><span class="mnav-n">01</span>Services</a>
+    <a href="index.html#story" style="--i:1"><span class="mnav-n">02</span>How it works</a>
+    <a href="builds.html" style="--i:2"><span class="mnav-n">03</span>Builds</a>
+    <a href="process.html" style="--i:3"><span class="mnav-n">04</span>Process</a>
+    <a href="agencies.html" aria-current="page" style="--i:4"><span class="mnav-n">05</span>Agencies</a>
+  </nav>
+  <div class="mnav-foot" style="--i:5">
+    <a class="btn btn-light" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="mnav-mail" href="mailto:hello@studioaxd.com">hello@studioaxd.com</a>
+    <p>Mysuru, Karnataka</p>
+  </div>
+</div>
 
 <main class="page">
 
@@ -73,6 +91,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="main.js?v=5"></script>
+<script src="main.js?v=6"></script>
 </body>
 </html>

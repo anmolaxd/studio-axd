@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --paper: #e3f6f8; /* was #f4f1ea */
   --paper-2: #c4e8ee; /* was #ebe7dd */
   --ink: #121211;
@@ -46,8 +46,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .link:hover { color: var(--accent); border-color: var(--accent); }
 
 /* NAV */
-.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 16px var(--g); background: rgba(227,246,248,.82); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color .3s; }
-.nav.scrolled { border-color: var(--line); }
+/* clear over the top of the page so it melts into the sea gradient; frosts once you scroll */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 16px var(--g); background: rgba(227,246,248,0); border-bottom: 1px solid transparent; transition: background .4s var(--ease), border-color .4s var(--ease), transform .5s var(--ease), backdrop-filter .4s var(--ease); }
+.nav.scrolled { background: rgba(227,246,248,.74); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-color: var(--line); }
 .wordmark { font-weight: 600; font-size: 18px; letter-spacing: -.02em; display: inline-flex; gap: 4px; align-items: baseline; }
 
 .nav nav { display: flex; gap: 32px; font-size: 15px; color: var(--muted); }
@@ -223,12 +224,18 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 
 /* RESPONSIVE */
 @media (max-width: 960px) {
-  /* phones and tablets: menu becomes a swipeable second row under the logo */
+  /* without JS the links stay as a swipeable row; with JS the Menu button takes over */
   .nav { flex-wrap: wrap; row-gap: 4px; }
   .nav nav { order: 3; width: 100%; gap: 14px; font-size: 13px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
   .nav nav::-webkit-scrollbar { display: none; }
   .nav nav a { padding: 8px 0; }
-  .hero { padding-top: 150px; }
+  .js .nav { flex-wrap: nowrap; }
+  .js .nav nav { display: none; }
+  .js .menu-btn { display: inline-flex; }
+  .js .mnav { display: flex; }
+  .js .nav .btn-small { margin-left: auto; margin-right: 10px; }
+  .nav.hide { transform: translateY(-100%); }
+  .hero { padding-top: 130px; }
   .story-inner, .sites { grid-template-columns: 1fr; }
   .story-inner { min-height: 0; }
   .stage { order: -1; height: auto; display: flex; flex-direction: column; align-items: center; }
@@ -302,4 +309,39 @@ a.build:hover .build-link { color: var(--accent); }
 .nav nav a[aria-current="page"] { color: var(--ink); }
 .explore .build { min-height: 200px; }
 .footer nav { flex-wrap: wrap; column-gap: 20px; }
-@media (max-width: 380px) { .nav nav { gap: 10px; font-size: 12.5px; } }  /* small phones: keep all 5 menu links visible */
+
+/* PHONE MENU: Menu button + full-screen deep-sea panel */
+.menu-btn { display: none; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r); background: rgba(255,255,255,.35); color: var(--ink); font: 500 14px var(--sans); cursor: pointer; transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease); }
+.menu-ico { position: relative; width: 16px; height: 10px; }
+.menu-ico i { position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor; transition: transform .5s var(--ease), top .5s var(--ease); }
+.menu-ico i:first-child { top: 0; }
+.menu-ico i:last-child { top: 8.5px; }
+.mnav { display: none; position: fixed; inset: 0; z-index: 39; flex-direction: column; justify-content: space-between; padding: 96px var(--g) 32px; background: var(--sea-deep); color: var(--paper); overflow-y: auto; visibility: hidden; clip-path: inset(0 0 100% 0); transition: clip-path .7s var(--ease), visibility 0s linear .7s; }
+.mnav nav { display: flex; flex-direction: column; }
+.mnav nav a { display: flex; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(227,246,248,.14); font-size: clamp(34px, 10vw, 52px); font-weight: 500; letter-spacing: -.04em; line-height: 1.05; }
+.mnav nav a[aria-current="page"] { color: var(--accent); }
+.mnav-n { font: 12px var(--mono); letter-spacing: .08em; color: var(--accent); transform: translateY(-.9em); }
+.mnav-foot { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 40px; color: rgba(227,246,248,.66); font-size: 15px; }
+.mnav-mail { color: var(--paper); border-bottom: 1px solid rgba(227,246,248,.4); padding-bottom: 2px; }
+.mnav nav a, .mnav-foot { opacity: 0; transform: translateY(28px); transition: opacity .5s var(--ease), transform .7s var(--ease); }
+/* open state: panel wipes down, then links rise in one after another */
+/* over a dark section (Agencies) the bar turns dark glass with light text */
+.nav.on-dark .logo { color: var(--paper); --x: var(--paper); }
+.nav.on-dark .btn-small { background: var(--paper); color: var(--ink); }
+.nav.on-dark .menu-btn { background: rgba(227,246,248,.08); color: var(--paper); border-color: rgba(227,246,248,.3); }
+.nav.on-dark nav { color: rgba(227,246,248,.7); }
+.nav.on-dark nav a:hover, .nav.on-dark nav a[aria-current="page"] { color: var(--paper); }
+.nav.on-dark.scrolled { background: rgba(10,52,66,.62); border-color: rgba(227,246,248,.12); }
+.nav.open { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; border-color: transparent; transform: none; }
+.nav.open .logo { color: var(--paper); --x: var(--paper); }
+.nav.open .btn-small { background: var(--paper); color: var(--ink); }
+.nav.open .menu-btn { background: transparent; color: var(--paper); border-color: rgba(227,246,248,.3); }
+.nav.open .menu-ico i:first-child { top: 4.25px; transform: rotate(45deg); }
+.nav.open .menu-ico i:last-child { top: 4.25px; transform: rotate(-45deg); }
+.menu-open .mnav { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path .7s var(--ease), visibility 0s; }
+.menu-open .mnav nav a, .menu-open .mnav-foot { opacity: 1; transform: none; transition-delay: calc(.18s + var(--i) * .06s); }
+.menu-open, .menu-open body { overflow: hidden; }
+.logo, .slice::before, .slice::after { transition: color .4s var(--ease); }
+@media (prefers-reduced-motion: reduce) {
+  .nav, .mnav, .mnav nav a, .mnav-foot, .menu-ico i { transition: none !important; }
+}
