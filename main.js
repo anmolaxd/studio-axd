@@ -1,4 +1,4 @@
-﻿// Studio AXD motion. Content is fully readable without this file; it only adds movement.
+// Studio AXD motion. Content is fully readable without this file; it only adds movement.
 (() => {
   const root = document.documentElement;
   const motion = root.classList.contains('motion');
@@ -29,6 +29,8 @@
         { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power3.out', immediateRender: false });
   });
 
+  // homepage-only sections; inner pages skip them
+  if (document.querySelector('.story')) {
   /* ---------- 3. Pinned story: message, AI reads it, reply, lead ---------- */
   const acts = gsap.utils.toArray('.act');
   const ps = document.getElementById('ps');
@@ -101,15 +103,19 @@
     .from('.bp-img', { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.8 }, 0.9)
     .from('.bp-cards span', { opacity: 0, y: 30, stagger: 0.1, duration: 0.5 }, 1.3);
 
+  }
+
   /* ---------- 6. Headings, services, process, contact ---------- */
   gsap.utils.toArray('.h-big, .sub, .ticks li:not(.case li), .ag-grid p').forEach((el) => {
     gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: E, scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
-  gsap.from('.build', { opacity: 0, y: 40, duration: 1.1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.build-grid', start: 'top 82%' } });
+  if (document.querySelector('.build-grid')) gsap.from('.build', { opacity: 0, y: 40, duration: 1.1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.build-grid', start: 'top 82%' } });
   gsap.from('.pre-mega', { opacity: 0, y: 20, duration: 1, ease: E, scrollTrigger: { trigger: '.pre-mega', start: 'top 90%' } });
-  gsap.from('.svc li', { opacity: 0, y: 50, duration: 1.1, ease: E, stagger: 0.12, scrollTrigger: { trigger: '.svc', start: 'top 80%' } });
+  if (document.querySelector('.svc')) gsap.from('.svc li', { opacity: 0, y: 50, duration: 1.1, ease: E, stagger: 0.12, scrollTrigger: { trigger: '.svc', start: 'top 80%' } });
+  if (document.querySelector('.steps')) {
   gsap.to('#stepFill', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 80%', end: 'bottom 60%', scrub: 0.5 } });
   gsap.from('.step', { opacity: 0, y: 30, duration: 1, ease: E, stagger: 0.15, scrollTrigger: { trigger: '.steps', start: 'top 80%' } });
+  }
   gsap.from('.mega a', { yPercent: 60, opacity: 0, duration: 1.4, ease: E, scrollTrigger: { trigger: '.mega', start: 'top 85%' } });
   gsap.from('.c-grid > *', { opacity: 0, y: 24, duration: 1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.c-grid', start: 'top 90%' } });
 })();

@@ -292,3 +292,8 @@ a.build:hover .build-link { color: var(--accent); }
   .case .tag { display: block; line-height: 1.6; }
   .case-facts dd { font-size: 16px; }
 }
+/* MULTI-PAGE: inner pages clear the fixed top bar; current page shows in the nav */
+.page > section:first-child { padding-top: clamp(130px, 14vw, 190px); border-top: 0; }
+.nav nav a[aria-current="page"] { color: var(--ink); }
+.explore .build { min-height: 200px; }
+.footer nav { flex-wrap: wrap; column-gap: 20px; }

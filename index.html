@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 <script>
   // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
@@ -31,9 +31,9 @@
   <nav aria-label="Main">
     <a href="#services">Services</a>
     <a href="#story">How it works</a>
-    <a href="#builds">Builds</a>
-    <a href="#process">Process</a>
-    <a href="#agencies">Agencies</a>
+    <a href="builds.html">Builds</a>
+    <a href="process.html">Process</a>
+    <a href="agencies.html">Agencies</a>
   </nav>
   <a class="btn btn-small" href="https://wa.me/918762553585" target="_blank" rel="noopener">WhatsApp us</a>
 </header>
@@ -166,88 +166,13 @@
   </div>
 </section>
 
-<!-- RECENT BUILDS -->
-<section class="builds" id="builds">
-  <div class="sec-head">
-    <p class="kicker">Recent builds</p>
-    <h2 class="h-big">Working systems, <em>not slides.</em></h2>
-    <p class="sub">Client work, products and demos we have built and tested. Each is labelled for what it is.</p>
-  </div>
-  <article class="case">
-    <div class="case-copy">
-      <span class="tag">Client · Aashrya Educational Foundation</span>
-      <h3>An online scholarship exam for an education foundation</h3>
-      <p>We build and run the technology for Aashrya Educational Foundation. The main piece is the exam platform for its Anmol Fellowship Programme: students in Classes 8 and 9 sit a supervised scholarship test at home, on the phone or computer their family already has.</p>
-      <ul class="ticks">
-        <li>Parents sign in with a one-time code, give consent and pay online</li>
-        <li>Each student gets their own paper, and every answer is saved the moment it is chosen</li>
-        <li>Results, ranks and certificates, with staff tools to run exam day</li>
-        <li>English and Kannada, with all data kept in India</li>
-      </ul>
-      <p class="case-also">We also make the programme's pitch decks for schools and partners, and its budget sheets.</p>
-    </div>
-    <dl class="case-facts">
-      <div><dt>Status</dt><dd>Built and tested. First exam planned for January 2027.</dd></div>
-      <div><dt>Automated checks</dt><dd>1,852, run before every change</dd></div>
-      <div><dt>Payments</dt><dd>Razorpay, confirmed only by a signed message from Razorpay</dd></div>
-    </dl>
-  </article>
+<!-- MORE PAGES -->
+<section class="builds explore">
   <div class="build-grid">
-    <a class="build" href="https://www.youtube.com/watch?v=whtoJuEQ6Bc" target="_blank" rel="noopener">
-      <span class="tag">Demo · Video</span>
-      <h3>Shopify ticket triage</h3>
-      <p>Reads each support ticket, tags it by topic and urgency, and drafts a reply for the team to check.</p>
-      <span class="build-link">Watch the 82-second demo <span aria-hidden="true">→</span></span>
-    </a>
-    <a class="build" href="#story">
-      <span class="tag">Demo · Live test number</span>
-      <h3>WhatsApp enquiry assistant</h3>
-      <p>Replies in English, Kannada or Hindi within seconds and adds the lead to the owner's list.</p>
-      <span class="build-link">See it above <span aria-hidden="true">→</span></span>
-    </a>
-    <div class="build">
-      <span class="tag">Template · Tested</span>
-      <h3>Website lead alerts</h3>
-      <p>A website form saves each lead to a Google Sheet and emails the owner straight away. Missing contact details are caught first.</p>
-    </div>
-    <div class="build">
-      <span class="tag">Websites · Built</span>
-      <h3>Homepages for trade businesses</h3>
-      <p>We have built 13 personalised homepages for plumbers, electricians and HVAC firms in the US, UK and Australia.</p>
-    </div>
-    <a class="build" href="https://gym-os-demo-liard.vercel.app/" target="_blank" rel="noopener" style="grid-column: 1 / -1;">
-      <span class="tag">Product · MAXD</span>
-      <h3>Gym OS: a complete operating system for gyms</h3>
-      <p>Member app, front desk, trainer app, UPI and GST-ready payments, and automatic renewal reminders, with consulting to set it up and run it.</p>
-      <span class="build-link">Open the live demo <span aria-hidden="true">→</span></span>
-    </a>
+    <a class="build" href="builds.html"><span class="tag">Builds</span><h3>Recent work</h3><p>Client work, products and demos, each labelled for what it is.</p><span class="build-link">See our builds <span aria-hidden="true">→</span></span></a>
+    <a class="build" href="process.html"><span class="tag">Process</span><h3>How we work</h3><p>Demo, scope and price, build and launch, then we look after it.</p><span class="build-link">See the process <span aria-hidden="true">→</span></span></a>
+    <a class="build" href="agencies.html" style="grid-column: 1 / -1;"><span class="tag">Agencies</span><h3>White-label for agencies</h3><p>Sell websites and automation under your own name. We build in the background.</p><span class="build-link">For agencies <span aria-hidden="true">→</span></span></a>
   </div>
-</section>
-
-<!-- PROCESS -->
-<section class="process" id="process">
-  <div class="sec-head">
-    <p class="kicker">Process</p>
-    <h2 class="h-big">You see it working <em>before</em> it goes live.</h2>
-  </div>
-  <div class="steps">
-    <div class="step-line"><span id="stepFill"></span></div>
-    <div class="step"><span class="step-n">01</span><h3>Live demo</h3><p>See a working demo and our past work, so you know exactly what you get.</p></div>
-    <div class="step"><span class="step-n">02</span><h3>Scope and price</h3><p>No fixed packages. A price that fits the size of your business.</p></div>
-    <div class="step"><span class="step-n">03</span><h3>Build and launch</h3><p>Your domain, your number, tested on real phones before it goes live.</p></div>
-    <div class="step"><span class="step-n">04</span><h3>Look after it</h3><p>A monthly plan for fixes and updates, with error alerts if anything breaks.</p></div>
-  </div>
-</section>
-
-<!-- AGENCIES -->
-<section class="agencies" id="agencies">
-  <p class="kicker light">For marketing and web agencies</p>
-  <h2 class="h-big">Sell it under <em>your</em> name.</h2>
-  <div class="ag-grid">
-    <p>Add websites, WhatsApp automation and custom tools to what you already offer. You set the price and own the client. We build for a fixed fee and stay in the background.</p>
-    <p>We set up the first one for one of your clients as a paid starter project, so you see it working before you sell it more widely.</p>
-  </div>
-  <a class="btn btn-light" href="https://wa.me/918762553585?text=Hi%2C%20I%27m%20from%20an%20agency%20and%20would%20like%20to%20see%20the%20white-label%20demo." target="_blank" rel="noopener">Book a 15-minute demo <span class="arrow" aria-hidden="true">→</span></a>
 </section>
 
 <!-- CONTACT -->
@@ -267,11 +192,11 @@
 <footer class="footer">
   <p class="wordmark" aria-label="Studio AXD"><span class="logo">A<span class="slice" data-t="X">X</span>D<span class="logo-sub">studio</span></span></p>
   <p>© 2026 Studio AXD. Mysuru, Karnataka, India.</p>
-  <nav aria-label="Legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  <nav aria-label="Pages"><a href="builds.html">Builds</a><a href="process.html">Process</a><a href="agencies.html">Agencies</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="main.js?v=4"></script>
+<script src="main.js?v=5"></script>
 </body>
 </html>
