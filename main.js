@@ -20,14 +20,14 @@
   /* ---------- 2. Hero word cycle: soft blur crossfade, not a slot machine ---------- */
   const langWords = gsap.utils.toArray('.lang-word');
   gsap.set(langWords, { autoAlpha: (i) => (i === 0 ? 1 : 0) });
-  let li = 0;
-  setTimeout(() => setInterval(() => {
-    const cur = langWords[li], next = langWords[(li + 1) % langWords.length];
-    gsap.to(cur, { autoAlpha: 0, yPercent: -18, filter: 'blur(6px)', duration: 0.5, ease: 'power2.in' });
-    gsap.fromTo(next, { autoAlpha: 0, yPercent: 18, filter: 'blur(6px)' },
-      { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out', delay: 0.25 });
-    li = (li + 1) % langWords.length;
-  }, 3000), 1200);
+  // one timeline (not setInterval) so swaps never pile up when the tab is in the background
+  const cycle = gsap.timeline({ repeat: -1, delay: 1.2 });
+  langWords.forEach((cur, i) => {
+    const next = langWords[(i + 1) % langWords.length];
+    cycle.to(cur, { autoAlpha: 0, yPercent: -18, filter: 'blur(6px)', duration: 0.45, ease: 'power2.in' }, '+=2.4')
+      .fromTo(next, { autoAlpha: 0, yPercent: 18, filter: 'blur(6px)' },
+        { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power3.out', immediateRender: false });
+  });
 
   /* ---------- 3. Pinned story: message, AI reads it, reply, lead ---------- */
   const acts = gsap.utils.toArray('.act');
