@@ -13,53 +13,21 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
-  gsap.set('.lang-word', { y: 0, yPercent: (i) => (i === 0 ? 0 : 140) });
   const E = 'expo.out';
 
-  /* ---------- 1. Opening sequence (once per browser session) ---------- */
-  const intro = document.getElementById('intro');
-  let seen = false;
-  try { seen = sessionStorage.getItem('axd-intro') === '1'; sessionStorage.setItem('axd-intro', '1'); } catch (e) { seen = true; }
+  /* ---------- 1. Hero entrance is plain CSS (styles.css, "HERO ENTRANCE") ---------- */
 
-  function heroIn() {
-    gsap.from('.hero-title .w, .lang', { yPercent: 110, duration: 1.3, ease: E, stagger: 0.07 });
-    gsap.from('.k-anim', { opacity: 0, y: 16, duration: 1, ease: E, delay: 0.5, stagger: 0.1 });
-    gsap.from('.nav', { opacity: 0, y: -10, duration: 1, ease: E, delay: 0.3 });
-    cycleLanguages();
-  }
-
-  if (!seen) {
-    intro.classList.add('play');
-    document.body.style.overflow = 'hidden';
-    const out = document.getElementById('introOut');
-    const words = 'Namaskara! Demo Dental Clinic ninda. Saturday teeth cleaning appointment bagge namma team confirm maduttaare. Nimma hesaru enu?'.split(' ');
-    // kept short (~1.5s): a longer intro made the site feel slow to open
-    const tl = gsap.timeline({ onComplete: endIntro });
-    tl.to('#introIn', { opacity: 1, y: 0, duration: 0.35, ease: E })
-      .to(out, { opacity: 1, duration: 0.2 }, '+=0.1');
-    words.forEach((w) => tl.call(() => { out.textContent += (out.textContent ? ' ' : '') + w; }, null, '+=0.025'));
-    tl.to(intro, { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.5, ease: 'expo.inOut' }, '+=0.15');
-    document.getElementById('introSkip').addEventListener('click', () => { tl.kill(); endIntro(); });
-    function endIntro() {
-      intro.classList.remove('play');
-      document.body.style.overflow = '';
-      heroIn();
-    }
-  } else {
-    heroIn();
-  }
-
-  /* ---------- 2. Hero language cycle: English / Kannada / Hindi ---------- */
-  function cycleLanguages() {
-    const words = gsap.utils.toArray('.lang-word');
-    let i = 0;
-    setInterval(() => {
-      const cur = words[i], next = words[(i + 1) % words.length];
-      gsap.to(cur, { yPercent: -140, duration: 0.8, ease: 'expo.inOut' });
-      gsap.fromTo(next, { yPercent: 140 }, { yPercent: 0, duration: 0.8, ease: 'expo.inOut' });
-      i = (i + 1) % words.length;
-    }, 2200);
-  }
+  /* ---------- 2. Hero word cycle: soft blur crossfade, not a slot machine ---------- */
+  const langWords = gsap.utils.toArray('.lang-word');
+  gsap.set(langWords, { autoAlpha: (i) => (i === 0 ? 1 : 0) });
+  let li = 0;
+  setTimeout(() => setInterval(() => {
+    const cur = langWords[li], next = langWords[(li + 1) % langWords.length];
+    gsap.to(cur, { autoAlpha: 0, yPercent: -18, filter: 'blur(6px)', duration: 0.5, ease: 'power2.in' });
+    gsap.fromTo(next, { autoAlpha: 0, yPercent: 18, filter: 'blur(6px)' },
+      { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.7, ease: 'power3.out', delay: 0.25 });
+    li = (li + 1) % langWords.length;
+  }, 3000), 1200);
 
   /* ---------- 3. Pinned story: message, AI reads it, reply, lead ---------- */
   const acts = gsap.utils.toArray('.act');

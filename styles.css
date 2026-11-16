@@ -55,14 +55,14 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .nav nav a:hover { color: var(--ink); }
 @media (max-width: 600px) { .kick-dot { display: none; } }
 
-/* INTRO (first visit only, shown by JS) */
-.intro { display: none; }
-.motion .intro.play { display: grid; position: fixed; inset: 0; z-index: 90; background: var(--ink); place-items: center; clip-path: inset(0% 0% 0% 0%); }
-.intro-chat { width: min(420px, 86vw); display: flex; flex-direction: column; gap: 10px; }
-.ib { max-width: 86%; padding: 12px 15px; border-radius: 10px; font-size: 17px; line-height: 1.45; }
-.ib.in { align-self: flex-start; background: #fff; color: var(--ink); border-top-left-radius: 2px; opacity: 0; transform: translateY(14px); }
-.ib.out { align-self: flex-end; background: var(--wa-out); color: var(--ink); border-top-right-radius: 2px; opacity: 0; }
-.intro-skip { position: absolute; bottom: 28px; right: 28px; background: none; border: 1px solid rgba(255,255,255,.25); color: rgba(255,255,255,.7); font: 500 13px var(--sans); padding: 8px 14px; border-radius: var(--r); cursor: pointer; }
+/* HERO ENTRANCE: plain CSS so it starts with the first paint, not after scripts load */
+@keyframes rise { from { opacity: 0; transform: translateY(.28em); filter: blur(10px); } }
+@keyframes soft { from { opacity: 0; transform: translateY(10px); } }
+.motion .hero-title .row { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+.motion .hero-title .row:nth-child(2) { animation-delay: .08s; }
+.motion .hero-title .row:nth-child(3) { animation-delay: .16s; }
+.motion .hero .k-anim { animation: soft .8s cubic-bezier(.2,.7,.2,1) .35s both; }
+.motion .hero .kicker.k-anim { animation-delay: 0s; }
 
 /* HERO */
 .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 110px var(--g) 40px; position: relative; }
