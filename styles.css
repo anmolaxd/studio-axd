@@ -207,7 +207,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 
 /* FOOTER */
 .footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; padding: 28px var(--g); border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-.footer nav { display: flex; gap: 24px; }
+.footer nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .footer nav a { padding: 12px 0; }  /* bigger tap area on phones */
 .graph-hint { display: none; margin-top: 12px; font: 12px var(--mono); color: rgba(244,241,234,.6); }
 @media (max-width: 600px) { .graph-svg { min-width: 760px; } .graph-hint { display: block; } }
@@ -345,3 +345,23 @@ a.build:hover .build-link { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .nav, .mnav, .mnav nav a, .mnav-foot, .menu-ico i { transition: none !important; }
 }
+
+/* service pages */
+.sp-sec { padding: clamp(56px, 7vw, 100px) var(--g); border-top: 1px solid var(--line); }
+.sp-h { font-size: clamp(26px, 3vw, 40px); font-weight: 500; letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
+.sp-cta { margin-top: 32px; }
+.sp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); }
+.sp-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 32px; }
+.sp-step h3 { font-size: 20px; font-weight: 500; margin: 8px 0; }
+.sp-step p { color: var(--muted); font-size: 16px; }
+.sp-faq { margin-top: 24px; max-width: 760px; }
+.sp-faq details { border-top: 1px solid var(--line); padding: 18px 0; }
+.sp-faq details:last-child { border-bottom: 1px solid var(--line); }
+.sp-faq summary { cursor: pointer; font-weight: 500; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.sp-faq summary::-webkit-details-marker { display: none; }
+.sp-faq summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+.sp-faq details[open] summary::after { content: "2"; }
+.sp-faq p { margin-top: 12px; color: var(--muted); }
+.sp-sec .build-grid { margin-top: 24px; }
+@media (max-width: 900px) { .sp-steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .sp-cols, .sp-steps { grid-template-columns: 1fr; } }
