@@ -1,6 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Google tag (GA4, property studioaxd.com under hello.studioaxd) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WKDD9727"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  // count enquiry clicks as lead events
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    var h = a.getAttribute('href'), ev = /wa\.me|whatsapp/.test(h) ? 'whatsapp_click' : /^mailto:/.test(h) ? 'email_click' : /^tel:/.test(h) ? 'phone_click' : '';
+    if (ev) gtag('event', ev, { link_url: h, page_path: location.pathname });
+  });
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Assistants for Business Using Gemini and Claude | Studio AXD</title>
