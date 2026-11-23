@@ -39,6 +39,49 @@
     matchMedia('(min-width: 961px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
   }
 
+  // Services drop-down: click or Enter toggles it; Escape, a click outside or leaving with the mouse closes it.
+  const dd = document.querySelector('.dd');
+  if (dd) {
+    const ddBtn = dd.querySelector('.dd-btn');
+    const setDd = (open) => { dd.classList.toggle('open', open); ddBtn.setAttribute('aria-expanded', String(open)); };
+    ddBtn.addEventListener('click', () => {
+      // with a mouse, hover already shows the panel, so a click there pins/unpins it
+      const open = !dd.classList.contains('open');
+      dd.classList.toggle('shut', !open);
+      setDd(open);
+    });
+    dd.addEventListener('mouseleave', () => { dd.classList.remove('shut'); setDd(false); });
+    dd.addEventListener('focusout', (e) => { if (!dd.contains(e.relatedTarget)) setDd(false); });
+    document.addEventListener('click', (e) => { if (!dd.contains(e.target)) setDd(false); });
+    addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && dd.contains(document.activeElement)) { dd.classList.add('shut'); setDd(false); ddBtn.focus(); }
+    });
+  }
+
+  // Build request form: idea buttons fill the box; Send opens WhatsApp or email with the request written out.
+  const ask = document.getElementById('askForm');
+  if (ask) {
+    const what = ask.elements.what;
+    ask.querySelectorAll('.ask-ideas button').forEach((b) => b.addEventListener('click', () => {
+      what.value = what.value.trim() ? what.value.trim() + '\n' + b.textContent : b.textContent;
+      what.focus();
+    }));
+    ask.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const via = (e.submitter && e.submitter.value) || 'wa';
+      const name = ask.elements.name.value.trim(), biz = ask.elements.biz.value.trim();
+      const msg = 'Hi Studio AXD, I would like you to build:\n' + what.value.trim()
+        + (name ? '\n\nName: ' + name : '') + (biz ? '\nBusiness: ' + biz : '');
+      const url = via === 'mail'
+        ? 'mailto:hello@studioaxd.com?subject=' + encodeURIComponent('Build request') + '&body=' + encodeURIComponent(msg)
+        : 'https://wa.me/918762553585?text=' + encodeURIComponent(msg);
+      if (window.gtag) gtag('event', 'build_request', { method: via });
+      // window.open with 'noopener' always returns null, so clear opener by hand; fall back if a popup blocker stops it
+      const win = via === 'mail' ? null : window.open(url, '_blank');
+      if (win) win.opener = null; else location.href = url;
+    });
+  }
+
   // No motion wanted, or GSAP failed to load: show the static page.
   if (!motion || !window.gsap || !window.ScrollTrigger) {
     root.classList.remove('motion');

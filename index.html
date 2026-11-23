@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=12">
 <script>
   // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
   document.documentElement.classList.add('js');
@@ -46,11 +46,8 @@
 <header class="nav" id="top">
   <a class="wordmark" href="#top" aria-label="Studio AXD home"><span class="logo">A<span class="slice" data-t="X">X</span>D<span class="logo-sub">studio</span></span></a>
   <nav aria-label="Main">
-    <a href="#services">Services</a>
-    <a href="#story">How it works</a>
-    <a href="builds.html">Builds</a>
-    <a href="process.html">Process</a>
-    <a href="agencies.html">Agencies</a>
+    <div class="dd"><button class="dd-btn" type="button" aria-expanded="false" aria-controls="ddp">Services<svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button><div class="dd-panel" id="ddp"><div class="dd-in"><div class="dd-col"><p class="dd-k">What we build</p><a href="websites.html"><b>Websites</b><span>Phone-first sites that bring enquiries</span></a><a href="whatsapp-automation.html"><b>WhatsApp automation</b><span>Instant replies in English and Kannada</span></a><a href="lead-automation.html"><b>Lead capture</b><span>Every enquiry saved, followed up</span></a><a href="ai-assistants.html"><b>AI assistants</b><span>Documents, data and drafts, with your rules</span></a></div><div class="dd-col"><p class="dd-k">Who it is for</p><a href="coaching-centres.html"><b>Coaching centres</b><span>Admissions, ERP, AI marking, mock tests</span></a><a href="agencies.html"><b>Agencies</b><span>White-label builds under your brand</span></a><a href="#story"><b>How it works</b><span>One enquiry, start to finish</span></a></div><a class="dd-card" href="#build"><span class="dd-k">Something else?</span><b>Tell us what you want built. We build anything.</b><span class="dd-go">Describe your idea <span aria-hidden="true">→</span></span></a></div></div></div>
+    <a href="builds.html">Builds</a><a href="pricing.html">Pricing</a><a href="process.html">Process</a><a href="about.html">About</a>
   </nav>
   <a class="btn btn-small" href="https://wa.me/918762553585" target="_blank" rel="noopener">WhatsApp us</a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span class="menu-txt">Menu</span><span class="menu-ico" aria-hidden="true"><i></i><i></i></span></button>
@@ -59,13 +56,11 @@
 <!-- PHONE MENU (opened by the Menu button; desktop uses the top bar links) -->
 <div class="mnav" id="mnav">
   <nav aria-label="Menu">
-    <a href="#services" style="--i:0"><span class="mnav-n">01</span>Services</a>
-    <a href="#story" style="--i:1"><span class="mnav-n">02</span>How it works</a>
-    <a href="builds.html" style="--i:2"><span class="mnav-n">03</span>Builds</a>
-    <a href="process.html" style="--i:3"><span class="mnav-n">04</span>Process</a>
-    <a href="agencies.html" style="--i:4"><span class="mnav-n">05</span>Agencies</a>
+    <p class="mnav-k" style="--i:0">Services</p>
+    <div class="mnav-sub" style="--i:1"><a href="websites.html">Websites</a><a href="whatsapp-automation.html">WhatsApp automation</a><a href="lead-automation.html">Lead capture</a><a href="ai-assistants.html">AI assistants</a><a href="coaching-centres.html">Coaching centres</a><a href="agencies.html">Agencies</a></div>
+    <a href="builds.html" style="--i:2"><span class="mnav-n">01</span>Builds</a><a href="pricing.html" style="--i:3"><span class="mnav-n">02</span>Pricing</a><a href="process.html" style="--i:4"><span class="mnav-n">03</span>Process</a><a href="about.html" style="--i:5"><span class="mnav-n">04</span>About</a>
   </nav>
-  <div class="mnav-foot" style="--i:5">
+  <div class="mnav-foot" style="--i:6">
     <a class="btn btn-light" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
     <a class="mnav-mail" href="mailto:hello@studioaxd.com">hello@studioaxd.com</a>
     <p>Mysuru, Karnataka</p>
@@ -88,6 +83,7 @@
       <a class="btn" href="https://wa.me/918762553585" target="_blank" rel="noopener">Message us on WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
       <a class="link" href="#services">See what we build</a>
     </div>
+    <nav class="quick" aria-label="Jump to"><a class="quick-hot" href="#build">Tell us what to build</a><a href="websites.html">Websites</a><a href="whatsapp-automation.html">WhatsApp automation</a><a href="coaching-centres.html">Coaching centres</a><a href="lead-automation.html">Lead capture</a><a href="ai-assistants.html">AI assistants</a><a href="pricing.html">Prices</a></nav>
   </div>
   <div class="scroll-cue k-anim" aria-hidden="true"><span></span>Scroll</div>
 </section>
@@ -99,6 +95,36 @@
     <span aria-hidden="true">Clinics</span><span aria-hidden="true">Dentists</span><span aria-hidden="true">Coaching centres</span><span aria-hidden="true">Gyms</span><span aria-hidden="true">Salons</span><span aria-hidden="true">Homestays</span><span aria-hidden="true">Restaurants</span><span aria-hidden="true">Plumbers</span><span aria-hidden="true">Electricians</span><span aria-hidden="true">Online stores</span><span aria-hidden="true">Schools</span><span aria-hidden="true">Foundations</span>
   </div>
 </div>
+
+<!-- BUILD REQUEST: visitor describes anything; Send opens WhatsApp or email with it filled in (nothing stored here) -->
+<section class="ask" id="build">
+  <div class="ask-head">
+    <p class="kicker">Tell us what you want built</p>
+    <h2 class="h-big">If you can describe it, <em>we can build it.</em></h2>
+    <p class="sub">Websites, apps, booking systems, WhatsApp bots, dashboards, AI tools, software for your staff. Write it in your own words, in English or Kannada. We reply the same day with how we would build it.</p>
+  </div>
+  <form class="ask-form" id="askForm">
+    <label class="ask-label" for="askWhat">What should we build?</label>
+    <textarea id="askWhat" name="what" rows="5" required maxlength="1500" placeholder="Example: An app where parents see their child's attendance and pay fees"></textarea>
+    <div class="ask-ideas" aria-label="Ideas to start from">
+      <button type="button">Online booking for my business</button>
+      <button type="button">A website that brings enquiries</button>
+      <button type="button">WhatsApp replies to customers</button>
+      <button type="button">An app for my customers or students</button>
+      <button type="button">Software to manage my staff and stock</button>
+      <button type="button">Automate a task we do by hand</button>
+    </div>
+    <div class="ask-row">
+      <label>Your name<input name="name" autocomplete="name" maxlength="80"></label>
+      <label>Business and city<input name="biz" autocomplete="organization" maxlength="120" placeholder="Example: Dental clinic, Mysuru"></label>
+    </div>
+    <div class="ask-send">
+      <button class="btn" type="submit" value="wa">Send on WhatsApp <span class="arrow" aria-hidden="true">→</span></button>
+      <button class="link ask-mail" type="submit" value="mail">or send by email</button>
+    </div>
+    <p class="ask-note">This opens WhatsApp or your email app with your message filled in. Nothing is saved on this website.</p>
+  </form>
+</section>
 
 <!-- SERVICES -->
 <section class="services" id="services">
@@ -113,6 +139,7 @@
     <li><span class="svc-n">04</span><h3>E-commerce &amp; support</h3><p>Support-ticket triage for Shopify stores, order lookups and routing each ticket to the right person.</p></li>
     <li><span class="svc-n">05</span><h3><a href="ai-assistants.html">AI assistants</a></h3><p>Reading documents, pulling out data, drafting replies and reports with Gemini or Claude, checked by rules you set.</p></li>
     <li><span class="svc-n">06</span><h3>Custom software</h3><p>Web platforms with logins, online payments and admin panels, plus dashboards and internal tools that connect the apps you already use.</p></li>
+    <li><span class="svc-n">07</span><h3><a href="coaching-centres.html">Coaching centres</a></h3><p>One system for coaching centres: admissions website, WhatsApp for parents, fees and attendance ERP, AI marking, study material and online mock tests.</p></li>
   </ol>
 </section>
 
@@ -226,11 +253,11 @@
 <footer class="footer">
   <p class="wordmark" aria-label="Studio AXD"><span class="logo">A<span class="slice" data-t="X">X</span>D<span class="logo-sub">studio</span></span></p>
   <p>© 2026 Studio AXD. Mysuru, Karnataka, India.</p>
-  <nav aria-label="Pages"><a href="websites.html">Websites</a><a href="whatsapp-automation.html">WhatsApp automation</a><a href="lead-automation.html">Lead capture</a><a href="ai-assistants.html">AI assistants</a><a href="builds.html">Builds</a><a href="process.html">Process</a><a href="pricing.html">Pricing</a><a href="agencies.html">Agencies</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  <nav aria-label="Pages"><a href="websites.html">Websites</a><a href="whatsapp-automation.html">WhatsApp automation</a><a href="lead-automation.html">Lead capture</a><a href="ai-assistants.html">AI assistants</a><a href="coaching-centres.html">Coaching centres</a><a href="builds.html">Builds</a><a href="process.html">Process</a><a href="pricing.html">Pricing</a><a href="agencies.html">Agencies</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="main.js?v=6"></script>
+<script src="main.js?v=8"></script>
 </body>
 </html>
