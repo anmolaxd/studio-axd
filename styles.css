@@ -369,3 +369,21 @@ a.build:hover .build-link { color: var(--accent); }
 .sp-sec .build-grid { margin-top: 24px; }
 @media (max-width: 900px) { .sp-steps { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) { .sp-cols, .sp-steps { grid-template-columns: 1fr; } }
+
+/* Pricing table (pricing.html); stacks into cards on phones so nothing scrolls sideways */
+.price-wrap { margin-top: 24px; }
+.price-table { width: 100%; border-collapse: collapse; font-size: 16px; }
+.price-table th, .price-table td { text-align: left; vertical-align: top; padding: 16px 12px 16px 0; border-top: 1px solid var(--line); }
+.price-table thead th { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-top: 0; }
+.price-table tbody th { font-weight: 500; width: 46%; }
+.price-table tbody th a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.price-table small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; margin-top: 4px; }
+.price-table td { white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  .price-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .price-table, .price-table tbody, .price-table tr, .price-table th, .price-table td { display: block; width: 100%; }
+  .price-table tr { border-top: 1px solid var(--line); padding: 14px 0; }
+  .price-table th, .price-table td, .price-table tbody th { border: 0; padding: 2px 0; white-space: normal; width: 100%; }
+  .price-table td:nth-of-type(1)::before { content: "Setup: "; color: var(--muted); }
+  .price-table td:nth-of-type(2)::before { content: "Monthly: "; color: var(--muted); }
+}
