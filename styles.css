@@ -74,6 +74,10 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .lang-word:not(.is-on) { display: none; }                  /* static version: "English." */
 .motion .lang { display: block; height: 1.02em; overflow: hidden; }
 .motion .lang-word { display: block; position: absolute; left: 0; top: 0; white-space: nowrap; }
+/* inline variant: rotating word sits inside a line; the hidden sizer holds the widest word's width */
+.lang-size { display: none; }
+.motion .lang-inline { display: inline-block; vertical-align: top; height: .9em; overflow: visible; }
+.motion .lang-inline .lang-size { display: block; visibility: hidden; white-space: nowrap; }
 .hero-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; margin-top: 36px; flex-wrap: wrap; }
 .lede { max-width: 440px; font-size: 19px; color: var(--ink-2); }
 .cta-row { display: flex; align-items: center; gap: 28px; }
