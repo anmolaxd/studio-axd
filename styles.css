@@ -452,3 +452,52 @@ a.build:hover .build-link { color: var(--accent); }
 .ask-note { font-size: 13px; color: var(--muted); }
 @media (max-width: 860px) { .ask, .ask-row { grid-template-columns: 1fr; } }
 .quick a.quick-hot { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+/* HERO PROOF CHAT (homepage, wide screens only): fills the empty right side with the headline's promise */
+.hero-chat { display: none; }
+@media (min-width: 1100px) {
+  .hero-chat { display: block; position: absolute; right: var(--g); top: clamp(96px, 15svh, 170px); width: clamp(300px, 24vw, 370px); margin: 0; background: var(--wa-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 30px 70px rgba(10,52,66,.22); transform: rotate(1.5deg); }
+  .hero .scroll-cue { display: none; }
+}
+.hc-bar { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--wa-bar); border-bottom: 1px solid rgba(0,0,0,.06); }
+.hc-bar b { display: block; font-size: 14px; font-weight: 600; }
+.hc-bar small { font-size: 11.5px; color: #667781; }
+.hc-time { margin-left: auto; font: 11px var(--mono); color: #667781; }
+.hc-chat { display: flex; flex-direction: column; gap: 7px; padding: 14px 12px; }
+.hc-chat .b { font-size: 13.5px; }
+.hc-lead { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; padding: 12px 14px; background: var(--paper); border-top: 1px solid var(--line); font-size: 13.5px; font-weight: 500; }
+.hc-lead small { flex-basis: 100%; padding-left: 18px; font: 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.hc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+/* messages arrive one after another, once */
+.motion .hero-chat { animation: soft .8s cubic-bezier(.2,.7,.2,1) .5s both; }
+.motion .hc-chat .b, .motion .hc-lead { animation: soft .5s cubic-bezier(.2,.7,.2,1) both; }
+.motion .hc-chat .b:nth-child(1) { animation-delay: 1.1s; }
+.motion .hc-chat .b:nth-child(2) { animation-delay: 1.9s; }
+.motion .hc-chat .b:nth-child(3) { animation-delay: 2.7s; }
+.motion .hc-chat .b:nth-child(4) { animation-delay: 3.5s; }
+.motion .hc-lead { animation-delay: 4.3s; }
+
+/* HERO 3D ORB (wide screens): lit glass sphere in brand sea blue, orange orbit ring, behind the tilted chat card */
+.hero-orb { display: none; }
+@media (min-width: 1100px) {
+  .hero-orb { display: block; position: absolute; z-index: 0; pointer-events: none; width: clamp(340px, 30vw, 520px); aspect-ratio: 1; right: calc(var(--g) + clamp(170px, 15vw, 260px)); top: clamp(60px, 9svh, 120px); perspective: 900px; }
+  .hero-chat { z-index: 1; transform: perspective(1400px) rotateY(-14deg) rotateX(5deg) rotateZ(1deg); transform-origin: 70% 50%;
+    box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 0 0 1px rgba(255,255,255,.45), -30px 40px 80px rgba(10,52,66,.28), 0 0 60px rgba(143,211,223,.45); }
+  .hero-title, .hero-foot, .hero .kicker { position: relative; z-index: 1; }
+}
+.orb, .orb-halo, .orb-ring { position: absolute; inset: 0; border-radius: 50%; }
+/* the sphere: highlight top left, deep sea core, cyan rim light bottom right */
+.orb { background:
+    radial-gradient(circle at 32% 28%, rgba(255,255,255,.95) 0 3%, rgba(232,248,250,.75) 9%, transparent 30%),
+    radial-gradient(circle at 70% 78%, rgba(143,211,223,.9), transparent 38%),
+    radial-gradient(circle at 40% 40%, #4fa6b9 0%, #0f5a6b 55%, #0a3442 78%);
+  box-shadow: inset -24px -30px 60px rgba(5,25,32,.55), inset 18px 14px 40px rgba(255,255,255,.25), 0 30px 80px rgba(10,52,66,.35); }
+.orb-halo { inset: -22%; background: radial-gradient(circle, rgba(143,211,223,.75) 0%, rgba(79,166,185,.35) 35%, transparent 68%); filter: blur(18px); }
+/* orange orbit ring, tilted in 3D; the front half is drawn over the sphere so it looks like it wraps around */
+.orb-ring { inset: -14%; border: 2px solid rgba(255,79,31,.85); box-shadow: 0 0 18px rgba(255,79,31,.55), inset 0 0 18px rgba(255,79,31,.35); transform: rotateX(74deg) rotateZ(-18deg); }
+.orb-ring-front { clip-path: inset(50% 0 0 0); }
+.motion .hero-orb { animation: orbIn 1.4s cubic-bezier(.2,.7,.2,1) .2s both; }
+.motion .orb, .motion .orb-halo, .motion .orb-ring { animation: orbFloat 9s ease-in-out infinite; }
+@keyframes orbIn { from { opacity: 0; transform: scale(.92); } }
+@keyframes orbFloat { 50% { translate: 0 -14px; } }  /* translate, not transform, so the ring keeps its 3D tilt */
+@media (prefers-reduced-motion: reduce) { .orb, .orb-halo, .orb-ring { animation: none !important; } }

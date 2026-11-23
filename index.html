@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=15">
 <script>
   // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
   document.documentElement.classList.add('js');
@@ -85,6 +85,18 @@
     </div>
     <nav class="quick" aria-label="Jump to"><a class="quick-hot" href="#build">Tell us what to build</a><a href="websites.html">Websites</a><a href="whatsapp-automation.html">WhatsApp automation</a><a href="coaching-centres.html">Coaching centres</a><a href="lead-automation.html">Lead capture</a><a href="ai-assistants.html">AI assistants</a><a href="pricing.html">Prices</a></nav>
   </div>
+  <div class="hero-orb" aria-hidden="true"><span class="orb-halo"></span><span class="orb-ring"></span><span class="orb"></span><span class="orb-ring orb-ring-front"></span></div>
+  <!-- HERO PROOF: the headline's promise shown as a short after-hours chat (example, desktop only) -->
+  <figure class="hero-chat" aria-label="Example: at 10:42 pm a customer asks for a slot and the WhatsApp assistant books them in while the business is closed.">
+    <div class="hc-bar" aria-hidden="true"><span class="av">YB</span><div><b>Your Business</b><small>Closed · assistant on</small></div><span class="hc-time">10:42 pm</span></div>
+    <div class="hc-chat" aria-hidden="true">
+      <p class="b b-in">Hi, any slot free tomorrow evening?<time>10:42 pm</time></p>
+      <p class="b b-out">Yes, 6:30 or 7:15 pm. Which one?<time>10:42 pm</time></p>
+      <p class="b b-in">7:15 please<time>10:43 pm</time></p>
+      <p class="b b-out">Booked for 7:15 pm. Reminder at 5 pm.<time>10:43 pm</time></p>
+    </div>
+    <figcaption class="hc-lead" aria-hidden="true"><span class="hc-dot"></span>New booking added to your list<small>Example conversation</small></figcaption>
+  </figure>
   <div class="scroll-cue k-anim" aria-hidden="true"><span></span>Scroll</div>
 </section>
 
