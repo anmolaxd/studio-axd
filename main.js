@@ -1,32 +1,36 @@
-// Studio AXD motion. Content is fully readable without this file; it only adds movement.
+// Studio AXD. The page is complete without this file; it adds the menu, the live demo, the form and light motion.
 (() => {
   const root = document.documentElement;
   const motion = root.classList.contains('motion');
   const nav = document.querySelector('.nav');
+  const WA = 'https://wa.me/918762553585';
 
-  // Top bar: frosts after 10px; on phones it slides away while scrolling down and returns on the way up.
-  const darkSecs = [...document.querySelectorAll('.agencies, .case')];
+  // WhatsApp links open with a message that fits the page (set on <body data-wa>), so we know what they came for.
+  const waMsg = document.body.dataset.wa;
+  if (waMsg) document.querySelectorAll('a[href="' + WA + '"]').forEach((a) => { a.href = WA + '?text=' + encodeURIComponent(waMsg); });
+
+  // Top bar: frosts after 10px; on phones it slides away going down and comes back going up.
   let lastY = scrollY;
   const onScroll = () => {
     const y = scrollY;
     nav.classList.toggle('scrolled', y > 10);
-    nav.classList.toggle('on-dark', darkSecs.some((el) => { const r = el.getBoundingClientRect(); return r.top <= 36 && r.bottom >= 36; }));
     if (!nav.classList.contains('open')) {
-      if (y > 160 && y > lastY + 4) nav.classList.add('hide');
-      else if (y < lastY - 4 || y <= 160) nav.classList.remove('hide');
+      if (y > 200 && y > lastY + 4) nav.classList.add('hide');
+      else if (y < lastY - 4 || y <= 200) nav.classList.remove('hide');
     }
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Phone menu: Menu button opens a full-screen panel; a link tap, Escape or widening the screen closes it.
+  // Phone menu
   const menuBtn = document.querySelector('.menu-btn');
   const mnav = document.getElementById('mnav');
   if (menuBtn && mnav) {
     const setMenu = (open) => {
       root.classList.toggle('menu-open', open);
       nav.classList.toggle('open', open);
+      if (open) nav.classList.remove('hide');
       menuBtn.setAttribute('aria-expanded', String(open));
       menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       menuBtn.querySelector('.menu-txt').textContent = open ? 'Close' : 'Menu';
@@ -39,160 +43,154 @@
     matchMedia('(min-width: 961px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
   }
 
-  // Services drop-down: click or Enter toggles it; Escape, a click outside or leaving with the mouse closes it.
+  // Services drop-down: hover shows it (CSS); click pins it; Escape, click outside or leaving closes it.
   const dd = document.querySelector('.dd');
   if (dd) {
-    const ddBtn = dd.querySelector('.dd-btn');
-    const setDd = (open) => { dd.classList.toggle('open', open); ddBtn.setAttribute('aria-expanded', String(open)); };
-    ddBtn.addEventListener('click', () => {
-      // with a mouse, hover already shows the panel, so a click there pins/unpins it
-      const open = !dd.classList.contains('open');
-      dd.classList.toggle('shut', !open);
-      setDd(open);
-    });
+    const btn = dd.querySelector('.dd-btn');
+    const setDd = (open) => { dd.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); };
+    btn.addEventListener('click', () => { const open = !dd.classList.contains('open'); dd.classList.toggle('shut', !open); setDd(open); });
     dd.addEventListener('mouseleave', () => { dd.classList.remove('shut'); setDd(false); });
     dd.addEventListener('focusout', (e) => { if (!dd.contains(e.relatedTarget)) setDd(false); });
     document.addEventListener('click', (e) => { if (!dd.contains(e.target)) setDd(false); });
-    addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && dd.contains(document.activeElement)) { dd.classList.add('shut'); setDd(false); ddBtn.focus(); }
-    });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && dd.contains(document.activeElement)) { dd.classList.add('shut'); setDd(false); btn.focus(); } });
   }
 
-  // Build request form: idea buttons fill the box; Send opens WhatsApp or email with the request written out.
-  const ask = document.getElementById('askForm');
-  if (ask) {
-    const what = ask.elements.what;
-    ask.querySelectorAll('.ask-ideas button').forEach((b) => b.addEventListener('click', () => {
-      what.value = what.value.trim() ? what.value.trim() + '\n' + b.textContent : b.textContent;
-      what.focus();
-    }));
-    ask.addEventListener('submit', (e) => {
+  // Project form: sends nothing to us directly. It opens WhatsApp or email with the request written out.
+  const form = document.getElementById('projectForm');
+  if (form) {
+    const err = form.querySelector('.form-err');
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const f = form.elements;
+      const problem = f.problem.value.trim();
+      if (!problem) { err.hidden = false; f.problem.focus(); return; }
+      err.hidden = true;
+      const need = (form.querySelector('input[name="need"]:checked') || {}).value;
+      const msg = 'Hi Studio AXD,' + (need ? '\nI need: ' + need : '') + '\n\n' + problem
+        + (f.name.value.trim() ? '\n\nName: ' + f.name.value.trim() : '')
+        + (f.biz.value.trim() ? '\nBusiness: ' + f.biz.value.trim() : '');
       const via = (e.submitter && e.submitter.value) || 'wa';
-      const name = ask.elements.name.value.trim(), biz = ask.elements.biz.value.trim();
-      const msg = 'Hi Studio AXD, I would like you to build:\n' + what.value.trim()
-        + (name ? '\n\nName: ' + name : '') + (biz ? '\nBusiness: ' + biz : '');
-      const url = via === 'mail'
-        ? 'mailto:hello@studioaxd.com?subject=' + encodeURIComponent('Build request') + '&body=' + encodeURIComponent(msg)
-        : 'https://wa.me/918762553585?text=' + encodeURIComponent(msg);
-      if (window.gtag) gtag('event', 'build_request', { method: via });
-      // window.open with 'noopener' always returns null, so clear opener by hand; fall back if a popup blocker stops it
-      const win = via === 'mail' ? null : window.open(url, '_blank');
+      if (window.gtag) gtag('event', 'build_request', { method: via, need: need || 'none' });
+      if (via === 'mail') { location.href = 'mailto:hello@studioaxd.com?subject=' + encodeURIComponent('Project enquiry' + (need ? ': ' + need : '')) + '&body=' + encodeURIComponent(msg); return; }
+      const url = WA + '?text=' + encodeURIComponent(msg);
+      const win = window.open(url, '_blank'); // 'noopener' would return null, so clear opener by hand
       if (win) win.opener = null; else location.href = url;
     });
   }
 
-  // No motion wanted, or GSAP failed to load: show the static page.
-  if (!motion || !window.gsap || !window.ScrollTrigger) {
-    root.classList.remove('motion');
-    document.querySelectorAll('.act').forEach((a) => a.classList.add('on'));
-    return;
+  // Phone contact bar: show after the first screen, hide while the contact section is on screen.
+  const mbar = document.querySelector('.mbar');
+  const contact = document.getElementById('contact');
+  if (mbar && 'IntersectionObserver' in window) {
+    let past = false, atContact = false;
+    const upd = () => mbar.classList.toggle('show', past && !atContact);
+    addEventListener('scroll', () => { past = scrollY > innerHeight * .7; upd(); }, { passive: true });
+    if (contact) new IntersectionObserver(([en]) => { atContact = en.isIntersecting; upd(); }).observe(contact);
   }
 
-  gsap.registerPlugin(ScrollTrigger);
-  const E = 'expo.out';
+  // Scroll reveal, once per element.
+  if (motion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((ens) => ens.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+  } else document.querySelectorAll('.rv').forEach((el) => el.classList.add('in'));
 
-  /* ---------- 1. Hero entrance is plain CSS (styles.css, "HERO ENTRANCE") ---------- */
-
-  /* ---------- 2. Hero word cycle: soft blur crossfade, not a slot machine ---------- */
-  const langWords = gsap.utils.toArray('.lang-word');
-  gsap.set(langWords, { autoAlpha: (i) => (i === 0 ? 1 : 0) });
-  // one timeline (not setInterval) so swaps never pile up when the tab is in the background
-  const cycle = gsap.timeline({ repeat: -1, delay: 1.2 });
-  langWords.forEach((cur, i) => {
-    const next = langWords[(i + 1) % langWords.length];
-    cycle.to(cur, { autoAlpha: 0, yPercent: -18, filter: 'blur(6px)', duration: 0.45, ease: 'power2.in' }, '+=2.4')
-      .fromTo(next, { autoAlpha: 0, yPercent: 18, filter: 'blur(6px)' },
-        { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power3.out', immediateRender: false });
-  });
-
-  // homepage-only sections; inner pages skip them
-  if (document.querySelector('.story')) {
-  /* ---------- 3. Pinned story: message, AI reads it, reply, lead ---------- */
-  const acts = gsap.utils.toArray('.act');
-  const ps = document.getElementById('ps');
-  const setAct = (n) => acts.forEach((a, k) => a.classList.toggle('on', k === n));
-  const setTyping = (on) => { ps.textContent = on ? 'typing...' : 'online'; ps.classList.toggle('typing', on); };
-
-  function storyTimeline() {
-    gsap.set(['#sIn', '#sOut', '#sType'], { opacity: 0, y: 16 });
-    gsap.set('#sType', { display: 'flex' });
-    gsap.set('.chip', { opacity: 0, x: 0, y: 0, scale: 0.6 });
-    gsap.set('#lead', { opacity: 0, x: 60 });
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.addLabel('a0')
-      .to('#sIn', { opacity: 1, y: 0, duration: 1 })
-      .addLabel('a1', '+=0.4')
-      .to('.chip', { opacity: 1, scale: 1, x: (i, el) => parseFloat(getComputedStyle(el).getPropertyValue('--x')), y: (i, el) => parseFloat(getComputedStyle(el).getPropertyValue('--y')), duration: 1.4, stagger: 0.15, ease: 'expo.out' }, 'a1')
-      .addLabel('a2', '+=0.5')
-      .to('.chip', { opacity: 0, scale: 0.8, duration: 0.6, stagger: 0.05 }, 'a2')
-      .to('#sType', { opacity: 1, y: 0, duration: 0.5 }, 'a2+=0.3')
-      .to('#sType', { opacity: 0, height: 0, padding: 0, margin: 0, duration: 0.3 }, 'a2+=1.3')
-      .to('#sOut', { opacity: 1, y: 0, duration: 0.9 }, 'a2+=1.4')
-      .addLabel('a3', '+=0.4')
-      .to('#lead', { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out' }, 'a3')
-      .from('.lead-new', { backgroundColor: 'rgba(255,79,31,.18)', duration: 1.2 }, 'a3+=0.4')
-      .to({}, { duration: 0.6 });
-    return tl;
+  // Workflow diagram draws itself once when it comes into view (CSS does the drawing).
+  const graph = document.getElementById('graph');
+  if (graph) {
+    if (motion && 'IntersectionObserver' in window) {
+      const gio = new IntersectionObserver(([en]) => { if (en.isIntersecting) { graph.classList.add('drawn'); gio.disconnect(); } }, { threshold: .4 });
+      gio.observe(graph);
+    } else graph.classList.add('drawn');
   }
 
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 961px)', () => {
-    const tl = storyTimeline();
-    const marks = ['a0', 'a1', 'a2', 'a3'].map((l) => tl.labels[l] / tl.duration());
-    const typingFrom = tl.labels.a2 / tl.duration() + 0.3 / tl.duration();
-    const typingTo = (tl.labels.a2 + 1.4) / tl.duration();
-    ScrollTrigger.create({
-      trigger: '.story-inner', start: 'top top', end: '+=2800', pin: true, scrub: 0.8, animation: tl,
-      onUpdate(self) {
-        const p = self.progress;
-        let n = 0; marks.forEach((m, k) => { if (p >= m - 0.02) n = k; });
-        setAct(n);
-        setTyping(p > typingFrom && p < typingTo);
-      },
+  /* ---------- LIVE BOARD (homepage hero demo) ----------
+     Each business type is one example enquiry: the chat, what the system logged, and the owner's list.
+     The HTML already holds the clinic example, so the page reads fine without this script. */
+  const board = document.getElementById('board');
+  if (!board) return;
+  const S = {
+    clinic: {
+      name: 'Demo Dental Clinic', av: 'DC',
+      chat: [['in', 'Namaskara, teeth cleaning ge appointment beku. Saturday sigutha?', '10:42 pm'], ['out', 'Namaskara! Saturday 11:00 am or 4:30 pm free ide. Yavudu beku?', '10:42 pm'], ['in', '4:30 please', '10:43 pm'], ['out', 'Done. Saturday 4:30 pm booked. Friday evening reminder kalisthivi.', '10:43 pm']],
+      log: [['10:42:03', 'Message received', 'WhatsApp, clinic closed'], ['10:42:04', 'Understood', '', [['Language', 'Kannada'], ['Wants', 'Teeth cleaning'], ['When', 'Saturday']], 1], ['10:42:06', 'Replied with free slots', 'From the clinic calendar'], ['10:43:12', 'Booked Saturday 4:30 pm', 'Added to the calendar'], ['10:43:13', 'Reminder scheduled', 'Friday, 6:00 pm']],
+      lead: ['Teeth cleaning, Sat 4:30 pm', 'Kannada · Booked by assistant', 'Reminder set for Friday'], old: ['Root canal price question', 'English · Asked for a call back'],
+    },
+    coaching: {
+      name: 'Demo Coaching Centre', av: 'CC',
+      chat: [['in', 'Hi, is there a NEET long-term batch? What are the timings?', '9:15 pm'], ['out', 'Yes. Morning batch 7 to 10 am, evening batch 4 to 7 pm. Would you like to visit for a free counselling session?', '9:15 pm'], ['in', 'Yes, Sunday morning', '9:16 pm'], ['out', 'Booked: Sunday 11:00 am. Please bring the latest marks card.', '9:16 pm']],
+      log: [['21:15:20', 'Message received', 'Parent, after office hours'], ['21:15:21', 'Understood', '', [['Course', 'NEET long-term'], ['Asks', 'Timings'], ['Who', 'Parent']], 1], ['21:15:23', 'Answered from approved facts', 'Batch timings only, no invented fees'], ['21:16:40', 'Counselling visit booked', 'Sunday 11:00 am'], ['21:16:41', 'Front office alerted', 'Call back list for Monday']],
+      lead: ['NEET long-term, visit Sun 11 am', 'English · Parent · Counselling booked', 'Call before Sunday to confirm'], old: ['KCET crash course fees', 'Kannada · Wants a call back'],
+    },
+    gym: {
+      name: 'Demo Fitness Studio', av: 'FS',
+      chat: [['in', 'Do you have a trial session? I can only come after 7 pm', '11:05 pm'], ['out', 'Yes, one trial session. 7:30 pm tomorrow or Thursday?', '11:05 pm'], ['in', 'Tomorrow', '11:06 pm'], ['out', 'Booked for tomorrow 7:30 pm. Please bring shoes and a towel.', '11:06 pm']],
+      log: [['23:05:10', 'Message received', 'Instagram ad, gym closed'], ['23:05:11', 'Understood', '', [['Wants', 'Trial session'], ['When', 'After 7 pm'], ['Type', 'New member']], 1], ['23:05:13', 'Offered trial slots', 'From the trainer schedule'], ['23:06:02', 'Trial booked', 'Tomorrow 7:30 pm'], ['23:06:03', 'Follow-up scheduled', 'Membership offer after the trial']],
+      lead: ['Trial, tomorrow 7:30 pm', 'English · From Instagram ad', 'Send membership plans after trial'], old: ['Personal training price', 'Hindi · Asked for a call back'],
+    },
+    salon: {
+      name: 'Demo Salon', av: 'DS',
+      chat: [['in', 'Haircut and beard trim on Sunday morning?', '8:50 am'], ['out', 'Sunday 10:00 am or 11:30 am with our senior stylist. Which one?', '8:50 am'], ['in', '10 am', '8:51 am'], ['out', 'Booked: Sunday 10:00 am, haircut and beard trim. See you then.', '8:51 am']],
+      log: [['08:50:31', 'Message received', 'While staff are with customers'], ['08:50:32', 'Understood', '', [['Wants', 'Haircut, beard'], ['When', 'Sunday morning'], ['Staff', 'Any']], 1], ['08:50:34', 'Offered free chairs', 'From the booking sheet'], ['08:51:20', 'Booked Sunday 10:00 am', 'Chair 2 blocked'], ['08:51:21', 'Reminder scheduled', 'Saturday evening']],
+      lead: ['Haircut and beard, Sun 10 am', 'English · Booked by assistant', 'Reminder set for Saturday'], old: ['Bridal package enquiry', 'Kannada · Wants a call back'],
+    },
+  };
+  const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const chat = board.querySelector('.chat-body'), log = board.querySelector('.log'), owner = board.querySelector('.owner-list');
+  const nameEl = board.querySelector('.chat-bar b'), avEl = board.querySelector('.chat-bar .av'), stEl = board.querySelector('.chat-bar small');
+  const tabs = [...board.querySelectorAll('.board-tabs button')];
+  let timers = [], current = 'clinic', started = false;
+
+  function render(key, animate) {
+    timers.forEach(clearTimeout); timers = [];
+    const s = S[key];
+    nameEl.textContent = s.name; avEl.textContent = s.av; stEl.textContent = 'Closed · assistant on';
+    chat.replaceChildren(); log.replaceChildren(); owner.replaceChildren();
+    const steps = [];
+    const after = [[0, 1], [2], [3], [4]]; // log lines that follow each chat message
+    s.chat.forEach(([side, text, t], i) => {
+      const b = el('p', 'b step b-' + side, text); b.append(el('time', null, t));
+      if (side === 'out' && animate) { const ty = el('div', 'b b-typing step'); ty.innerHTML = '<i></i><i></i><i></i>'; steps.push([ty, chat, 'typing']); }
+      steps.push([b, chat]);
+      after[i].forEach((j) => steps.push([logItem(s.log[j]), log]));
     });
-    setAct(0);
-  });
-  mm.add('(max-width: 960px)', () => {
-    acts.forEach((a) => a.classList.add('on'));
-    const tl = storyTimeline();
-    tl.pause();
-    ScrollTrigger.create({ trigger: '.stage', start: 'top 70%', once: true, onEnter: () => tl.timeScale(1.4).play() });
-  });
-
-  /* ---------- 4. Workflow graph draws itself ---------- */
-  const paths = gsap.utils.toArray('.g-path');
-  paths.forEach((p) => { const L = p.getTotalLength(); gsap.set(p, { strokeDasharray: L, strokeDashoffset: L }); });
-  gsap.set('.g-flow', { opacity: 0 });
-  gsap.timeline({ scrollTrigger: { trigger: '#graph', start: 'top 75%', end: 'center 45%', scrub: 0.6 } })
-    .from('.g-node', { opacity: 0, y: 24, scale: 0.92, transformOrigin: 'center', stagger: 0.25, duration: 1 })
-    .to(paths, { strokeDashoffset: 0, stagger: 0.25, duration: 1, ease: 'none' }, 0.3)
-    .set('.g-path.g-dash', { strokeDasharray: '5 6' })
-    .to('.g-flow', { opacity: 1, duration: 0.3 });
-
-  /* ---------- 5. Sample website assembles itself ---------- */
-  gsap.timeline({ scrollTrigger: { trigger: '#browser', start: 'top 80%', end: 'bottom 60%', scrub: 0.7 } })
-    .from('#browser', { y: 80, rotateX: 8, transformPerspective: 1200, opacity: 0.4, duration: 1 })
-    .from('.bp-nav > *', { opacity: 0, y: -10, stagger: 0.1, duration: 0.5 }, 0.4)
-    .from('.bp-h', { opacity: 0, y: 20, stagger: 0.15, duration: 0.6 }, 0.7)
-    .from('.bp-p', { scaleX: 0, transformOrigin: 'left', stagger: 0.1, duration: 0.5 }, 1)
-    .from('.bp-cta', { opacity: 0, scale: 0.8, duration: 0.4 }, 1.2)
-    .from('.bp-img', { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.8 }, 0.9)
-    .from('.bp-cards span', { opacity: 0, y: 30, stagger: 0.1, duration: 0.5 }, 1.3);
-
+    const row = el('div', 'lead-row new step'); row.append(el('b', null, s.lead[0]), el('span', null, s.lead[1]), el('span', 'next', s.lead[2]));
+    const old = el('div', 'lead-row'); old.append(el('b', null, s.old[0]), el('span', null, s.old[1]));
+    owner.append(old);
+    steps.push([row, owner, 'first']);
+    if (!animate) { steps.forEach(([n, p, k]) => { if (k === 'typing') return; k === 'first' ? p.prepend(n) : p.append(n); }); return; }
+    let t = 300;
+    steps.forEach(([n, p, k]) => {
+      timers.push(setTimeout(() => {
+        chat.querySelectorAll('.b-typing').forEach((x) => x.remove());
+        n.classList.add('pending'); k === 'first' ? p.prepend(n) : p.append(n);
+        requestAnimationFrame(() => requestAnimationFrame(() => n.classList.remove('pending')));
+      }, t));
+      t += k === 'typing' ? 900 : (p === chat ? 700 : 450);
+    });
   }
-
-  /* ---------- 6. Headings, services, process, contact ---------- */
-  gsap.utils.toArray('.h-big, .sub, .ticks li:not(.case li), .ag-grid p').forEach((el) => {
-    gsap.from(el, { opacity: 0, y: 40, duration: 1.2, ease: E, scrollTrigger: { trigger: el, start: 'top 88%' } });
-  });
-  if (document.querySelector('.build-grid')) gsap.from('.build', { opacity: 0, y: 40, duration: 1.1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.build-grid', start: 'top 82%' } });
-  gsap.from('.pre-mega', { opacity: 0, y: 20, duration: 1, ease: E, scrollTrigger: { trigger: '.pre-mega', start: 'top 90%' } });
-  if (document.querySelector('.svc')) gsap.from('.svc li', { opacity: 0, y: 50, duration: 1.1, ease: E, stagger: 0.12, scrollTrigger: { trigger: '.svc', start: 'top 80%' } });
-  if (document.querySelector('.steps')) {
-  gsap.to('#stepFill', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 80%', end: 'bottom 60%', scrub: 0.5 } });
-  gsap.from('.step', { opacity: 0, y: 30, duration: 1, ease: E, stagger: 0.15, scrollTrigger: { trigger: '.steps', start: 'top 80%' } });
+  function logItem([t, b, sub, tags, ai]) {
+    const li = el('li', 'step' + (ai ? ' ai' : '')); li.append(el('time', null, t));
+    const d = el('div'); d.append(el('b', null, b));
+    if (sub) d.append(el('span', null, sub));
+    if (tags) { const tg = el('div', 'tags'); tags.forEach(([k, v]) => { const s = el('span'); s.append(el('em', null, k), v); tg.append(s); }); d.append(tg); }
+    li.append(d); return li;
   }
-  gsap.from('.mega a', { yPercent: 60, opacity: 0, duration: 1.4, ease: E, scrollTrigger: { trigger: '.mega', start: 'top 85%' } });
-  gsap.from('.c-grid > *', { opacity: 0, y: 24, duration: 1, ease: E, stagger: 0.1, scrollTrigger: { trigger: '.c-grid', start: 'top 90%' } });
+  const select = (key, animate) => {
+    current = key;
+    tabs.forEach((t) => { const on = t.dataset.k === key; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    render(key, animate && motion);
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t.dataset.k, true));
+    t.addEventListener('keydown', (e) => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return;
+      const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); select(n.dataset.k, true);
+    });
+  });
+  board.querySelector('.replay').addEventListener('click', () => select(current, true));
+  // first play when the board scrolls into view
+  if (motion && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([en]) => { if (en.isIntersecting && !started) { started = true; select('clinic', true); io.disconnect(); } }, { threshold: .35 });
+    io.observe(board);
+  }
 })();
