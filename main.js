@@ -134,6 +134,35 @@
       lead: ['Haircut and beard, Sun 10 am', 'English · Booked by assistant', 'Reminder set for Saturday'], old: ['Bridal package enquiry', 'Kannada · Wants a call back'],
     },
   };
+  /* ORBIT: chips ride the sphere's ring (the business with its system around it) and follow the board's selected example.
+     Ring = circle of radius 0.64 x sphere width tilted 74deg, so on screen it is an ellipse with height factor cos(74deg). */
+  const orbWrap = document.querySelector('.orb-wrap'), chips = orbWrap ? [...orbWrap.querySelectorAll('.orb-chip')] : [];
+  const moments = {
+    clinic: ['New enquiry, 10:42 pm', 'Booked: Sat 4:30 pm', 'Reminder sent', 'Review requested'],
+    coaching: ['Parent asked, 9:15 pm', 'Visit booked: Sun 11 am', 'Front office alerted', 'Fee reminder sent'],
+    gym: ['Instagram lead, 11:05 pm', 'Trial booked: 7:30 pm', 'Membership plans sent', 'Renewal reminder sent'],
+    salon: ['Chair request, 8:50 am', 'Booked: Sun 10 am', 'Reminder sent', 'Review requested'],
+  };
+  let orbSet = 'clinic';
+  if (motion && chips.length && getComputedStyle(orbWrap).display !== 'none') {
+    const K = Math.cos(74 * Math.PI / 180), R = 64, lap = 30000, t0 = performance.now();
+    const state = chips.map((c, i) => ({ c, n: i, last: -1 }));
+    const tick = (now) => {
+      state.forEach((s, i) => {
+        const turn = (now - t0) / lap + i / chips.length + 0.08; // 0.08 starts the first chip on the front
+        const a = turn * 2 * Math.PI, sin = Math.sin(a), d = (sin + 1) / 2; // d: 0 at the back, 1 at the front
+        const round = Math.floor(turn + 0.25); // changes when the chip is hidden behind the sphere (sin = -1)
+        if (round !== s.last) { if (s.last !== -1) s.n += chips.length; s.last = round; s.c.textContent = moments[orbSet][s.n % 4]; }
+        s.c.style.setProperty('--x', (50 + R * Math.cos(a)) + '%');
+        s.c.style.setProperty('--y', (50 + R * K * sin) + '%');
+        s.c.style.setProperty('--s', (0.82 + 0.18 * d).toFixed(3));
+        s.c.style.setProperty('--o', (0.35 + 0.65 * d).toFixed(3));
+        s.c.classList.toggle('behind', sin < 0);
+      });
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
   const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
   const chat = board.querySelector('.chat-body'), log = board.querySelector('.log'), owner = board.querySelector('.owner-list');
   const nameEl = board.querySelector('.chat-bar b'), avEl = board.querySelector('.chat-bar .av'), stEl = board.querySelector('.chat-bar small');
@@ -176,7 +205,8 @@
     li.append(d); return li;
   }
   const select = (key, animate) => {
-    current = key;
+    current = key; orbSet = key;
+    if (!motion) chips.forEach((c, i) => { c.textContent = moments[key][i]; });
     tabs.forEach((t) => { const on = t.dataset.k === key; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
     render(key, animate && motion);
   };

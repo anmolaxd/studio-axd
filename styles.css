@@ -569,9 +569,20 @@ a.blk:hover h3 { color: var(--accent-ink); }
 .orb-ring { inset: -14%; border: 2px solid rgba(255,79,31,.85); box-shadow: 0 0 18px rgba(255,79,31,.55), inset 0 0 18px rgba(255,79,31,.35); transform: perspective(900px) rotateX(74deg) rotateZ(-18deg); }
 .orb-ring-front { clip-path: inset(50% 0 0 0); }
 .motion .orb-wrap { animation: orbIn 1.4s var(--ease) .2s both; }
-.motion .orb, .motion .orb-halo, .motion .orb-ring { animation: orbFloat 9s ease-in-out infinite; }
+.motion .orb, .motion .orb-halo, .motion .orb-ring, .motion .orb-chip { animation: orbFloat 9s ease-in-out infinite; }
 @keyframes orbIn { from { opacity: 0; transform: scale(.92); } }
 @keyframes orbFloat { 50% { translate: 0 -14px; } } /* translate, not transform, so the ring keeps its tilt */
+/* the sphere is the client's business; the ring is the system; chips are real moments from the demo board riding the ring.
+   Without JS (or with reduced motion) they sit still on the front of the ring; main.js moves them and swaps their text behind the sphere. */
+.orb { z-index: 2; }
+.orb-ring-front { z-index: 3; }
+.orb-chip { position: absolute; left: var(--x); top: var(--y); z-index: 4; transform: translate(-50%, -50%) scale(var(--s, 1)); opacity: var(--o, 1);
+  display: flex; align-items: center; gap: 7px; white-space: nowrap; padding: 6px 10px 6px 8px; border-radius: 6px;
+  font-size: 12.5px; font-weight: 500; line-height: 1.2; color: #e9f7f9;
+  background: rgba(10,52,66,.82); border: 1px solid rgba(143,211,223,.45); box-shadow: 0 8px 22px rgba(10,52,66,.35), 0 0 14px rgba(143,211,223,.25); backdrop-filter: blur(6px); }
+.orb-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #ff4f1f; box-shadow: 0 0 8px rgba(255,79,31,.9); flex: none; }
+.orb-chip.behind { z-index: 1; }
+.orb-note { position: absolute; top: calc(100% + 34px); right: -6%; width: 118%; text-align: right; font-size: 13px; line-height: 1.45; color: rgba(10,52,66,.72); }
 
 /* WORKFLOW DIAGRAM: draws itself once when it scrolls into view (JS adds .drawn) */
 .graph { overflow-x: auto; scrollbar-width: thin; }

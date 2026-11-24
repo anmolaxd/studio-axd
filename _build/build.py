@@ -10,7 +10,7 @@ import json, pathlib, re
 
 HERE = pathlib.Path(__file__).parent
 SITE = HERE.parent
-V = "22"  # bump to make browsers fetch new CSS/JS
+V = "23"  # bump to make browsers fetch new CSS/JS
 
 WA = "https://wa.me/918762553585"
 LOGO = '<span class="logo">A<span class="slice" data-t="X">X</span>D<span class="logo-sub">studio</span></span>'
