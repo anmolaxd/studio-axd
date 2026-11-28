@@ -32,7 +32,8 @@ export async function onRequestPost({ request, env }) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text }), // plain text, no parse_mode, so visitor text cannot inject formatting
-  }).catch(() => null);
+  }).catch((e) => { console.error('telegram fetch failed', String(e)); return null; });
+  if (tg && !tg.ok) console.error('telegram refused', tg.status, await tg.text()); // Telegram's reason, never the token
 
   return tg && tg.ok ? reply(true, 200) : reply(false, 502);
 }
