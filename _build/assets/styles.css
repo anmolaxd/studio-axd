@@ -449,6 +449,12 @@ a.blk:hover h3 { color: var(--accent-ink); }
 .form-send .alt:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
 .form .note { margin-top: -4px; }
 .form-err { color: var(--accent-ink); font-size: 14px; font-weight: 500; }
+.form > label.lbl { display: grid; gap: 8px; }
+.form-ok { font-size: 15px; font-weight: 600; color: var(--ink); }
+.deep .form .note { color: var(--ink-2); }
+.deep .form .form-ok { color: var(--ink); }
+.form .note a, .phero .lede a { text-decoration: underline; text-underline-offset: 3px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* FOOTER */
 .footer { background: #0a3442; color: var(--on-deep-2); border-top: 1px solid var(--line-d); padding: 56px 0 32px; font-size: 15px; }

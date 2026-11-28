@@ -55,26 +55,39 @@
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && dd.contains(document.activeElement)) { dd.classList.add('shut'); setDd(false); btn.focus(); } });
   }
 
-  // Project form: sends nothing to us directly. It opens WhatsApp or email with the request written out.
+  // Project form: posts to /api/enquiry (Cloudflare function -> Telegram). If that fails, WhatsApp opens with the message so nothing is lost.
   const form = document.getElementById('projectForm');
   if (form) {
-    const err = form.querySelector('.form-err');
-    form.addEventListener('submit', (e) => {
+    const err = form.querySelector('.form-err'), ok = form.querySelector('.form-ok');
+    const say = (el, text) => { err.hidden = ok.hidden = true; el.textContent = text; el.hidden = false; };
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const f = form.elements;
       const problem = f.problem.value.trim();
-      if (!problem) { err.hidden = false; f.problem.focus(); return; }
-      err.hidden = true;
+      if (!problem) { say(err, 'Please write a line or two about what you need.'); f.problem.focus(); return; }
       const need = (form.querySelector('input[name="need"]:checked') || {}).value;
       const msg = 'Hi Studio AXD,' + (need ? '\nI need: ' + need : '') + '\n\n' + problem
         + (f.name.value.trim() ? '\n\nName: ' + f.name.value.trim() : '')
         + (f.biz.value.trim() ? '\nBusiness: ' + f.biz.value.trim() : '');
-      const via = (e.submitter && e.submitter.value) || 'wa';
+      const openWa = () => {
+        const url = WA + '?text=' + encodeURIComponent(msg);
+        const win = window.open(url, '_blank'); // 'noopener' would return null, so clear opener by hand
+        if (win) win.opener = null; else location.href = url;
+      };
+      const via = (e.submitter && e.submitter.value) || 'send';
       if (window.gtag) gtag('event', 'build_request', { method: via, need: need || 'none' });
-      if (via === 'mail') { location.href = 'mailto:hello@studioaxd.com?subject=' + encodeURIComponent('Project enquiry' + (need ? ': ' + need : '')) + '&body=' + encodeURIComponent(msg); return; }
-      const url = WA + '?text=' + encodeURIComponent(msg);
-      const win = window.open(url, '_blank'); // 'noopener' would return null, so clear opener by hand
-      if (win) win.opener = null; else location.href = url;
+      if (via === 'wa') { openWa(); return; }
+      if (!f.reply_to.value.trim()) { say(err, 'Please add your WhatsApp number or email so we can reply.'); f.reply_to.focus(); return; }
+      const btn = e.submitter; if (btn) btn.disabled = true;
+      try {
+        const r = await fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        say(ok, 'Thank you. Your message reached us, and we will reply today.');
+      } catch (_) {
+        say(err, 'Our form could not send just now, so we opened WhatsApp with your message. Press send there.');
+        openWa();
+      } finally { if (btn) btn.disabled = false; }
     });
   }
 

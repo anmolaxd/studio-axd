@@ -2,15 +2,24 @@
 
 Each page = heads/<page>.html (title, meta, schema) + pages/<page>.html (the <main> content)
 + the shared parts below (top bar, phone menu, contact form, footer). Edit the parts here once
-and every page gets the change. GitHub Pages does not publish folders that start with "_".
+and every page gets the change. Everything is written to public/, the only folder that goes live
+(Cloudflare Pages). CSS and JS sources are in _build/assets/; public/ gets minified copies.
 The first line of a page file can be a settings comment, for example:
 <!--{"nav": "work", "wa": "Hi, I saw your work page", "need": "Website", "contact": false}-->
+Needs: pip install rjsmin rcssmin
 """
-import json, pathlib, re
+import hashlib, json, pathlib, re
+import rcssmin, rjsmin
 
 HERE = pathlib.Path(__file__).parent
-SITE = HERE.parent
-V = "23"  # bump to make browsers fetch new CSS/JS
+OUT = HERE.parent / "public"
+# version tag on CSS/JS links = hash of their contents, so browsers refetch exactly when they change
+V = hashlib.sha1(b"".join((HERE / "assets" / n).read_bytes() for n in ("styles.css", "main.js"))).hexdigest()[:8]
+
+
+def url(f):
+    """menu file name -> clean link: index.html -> /, pricing.html -> /pricing"""
+    return "/" if f == "index.html" else "/" + f[:-5] if f.endswith(".html") else f
 
 WA = "https://wa.me/918762553585"
 LOGO = '<span class="logo">A<span class="slice" data-t="X">X</span>D<span class="logo-sub">studio</span></span>'
@@ -30,13 +39,11 @@ INDUSTRIES = [
 ]
 MAIN = [("builds.html", "Work", "work"), ("pricing.html", "Pricing", "pricing"), ("about.html", "About", "about")]
 
-GA = """<!-- Google tag (GA4, property studioaxd.com under hello.studioaxd) -->
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WKDD9727"></script>
+GA = """<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WKDD9727"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  // count enquiry clicks as lead events
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
     var h = a.getAttribute('href'), ev = /wa\\.me|whatsapp/.test(h) ? 'whatsapp_click' : /^mailto:/.test(h) ? 'email_click' : /^tel:/.test(h) ? 'phone_click' : '';
@@ -50,10 +57,10 @@ def cur(href, page):
 
 
 def header(page, cfg):
-    col = lambda items: "".join(f'<a href="{h}"{cur(h, page)}><b>{n}</b><span>{d}</span></a>' for h, n, d in items)
+    col = lambda items: "".join(f'<a href="{url(h)}"{cur(h, page)}><b>{n}</b><span>{d}</span></a>' for h, n, d in items)
     svc_current = page in [h for h, *_ in SERVICES + INDUSTRIES]
-    links = "".join(f'<a href="{h}"{cur(h, page)}>{n}</a>' for h, n, _ in MAIN)
-    home = "#top" if page == "index.html" else "index.html"
+    links = "".join(f'<a href="{url(h)}"{cur(h, page)}>{n}</a>' for h, n, _ in MAIN)
+    home = "#top" if page == "index.html" else "/"
     return f"""<a class="skip" href="#main">Skip to content</a>
 <header class="nav" id="top">
   <div class="nav-in">
@@ -69,9 +76,9 @@ def header(page, cfg):
 <div class="mnav" id="mnav">
   <nav aria-label="Menu">
     <p class="mnav-k">What we build</p>
-    <div class="mnav-sub">{"".join(f'<a href="{h}"{cur(h, page)}>{n}</a>' for h, n, _ in SERVICES)}</div>
+    <div class="mnav-sub">{"".join(f'<a href="{url(h)}"{cur(h, page)}>{n}</a>' for h, n, _ in SERVICES)}</div>
     <p class="mnav-k">Who it is for</p>
-    <div class="mnav-sub">{"".join(f'<a href="{h}"{cur(h, page)}>{n}</a>' for h, n, _ in INDUSTRIES)}</div>
+    <div class="mnav-sub">{"".join(f'<a href="{url(h)}"{cur(h, page)}>{n}</a>' for h, n, _ in INDUSTRIES)}</div>
     {links}
   </nav>
   <div class="mnav-foot">
@@ -103,40 +110,49 @@ def contact(cfg):
         <p><span>Studio</span>Mysuru, Karnataka. Meetings across Mysuru; online across India.</p>
       </div>
     </div>
-    <form class="form" id="projectForm" novalidate>
+    <form class="form" id="projectForm" action="/api/enquiry" method="post">
       <fieldset><legend>What do you need?</legend><div class="picks">{picks}</div></fieldset>
       <div><label class="lbl" for="problem">What should it do for your business?</label>
-      <textarea id="problem" name="problem" rows="5" maxlength="1500" placeholder="Example: Parents message us all evening about fees and timings, and we reply the next morning."></textarea></div>
-      <p class="form-err" role="alert" hidden>Please write a line or two about what you need.</p>
+      <textarea id="problem" name="problem" rows="5" maxlength="1500" required placeholder="Example: Parents message us all evening about fees and timings, and we reply the next morning."></textarea></div>
       <div class="row2">
         <label>Your name<input type="text" name="name" autocomplete="name" maxlength="80"></label>
         <label>Business and city<input type="text" name="biz" autocomplete="organization" maxlength="120" placeholder="Dental clinic, Mysuru"></label>
       </div>
+      <label class="lbl">WhatsApp number or email<input type="text" name="reply_to" autocomplete="tel" maxlength="120" required placeholder="So we can reply"></label>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <p class="form-err" role="alert" hidden></p>
+      <p class="form-ok" role="status" hidden></p>
       <div class="form-send">
-        <button class="btn" type="submit" value="wa">Send on WhatsApp <span class="arrow" aria-hidden="true">&rarr;</span></button>
-        <button class="alt" type="submit" value="mail">or send by email</button>
+        <button class="btn" type="submit" value="send">Send enquiry <span class="arrow" aria-hidden="true">&rarr;</span></button>
+        <button class="alt" type="submit" value="wa" formnovalidate>or message us on WhatsApp</button>
       </div>
-      <p class="note">This opens WhatsApp or your email app with your message filled in. Nothing is saved on this website.</p>
+      <p class="note">Your message comes straight to our team and is used only to reply to you. See our <a href="/privacy">privacy policy</a>.</p>
     </form>
   </div>
 </section>"""
 
 
 def footer():
-    col = lambda title, items: f'<div class="foot-col"><h2>{title}</h2>' + "".join(f'<a href="{h}">{n}</a>' for h, n, *_ in items) + "</div>"
+    col = lambda title, items: f'<div class="foot-col"><h2>{title}</h2>' + "".join(f'<a href="{url(h)}">{n}</a>' for h, n, *_ in items) + "</div>"
     studio = [("builds.html", "Work"), ("pricing.html", "Pricing"), ("process.html", "How we work"), ("about.html", "About"), ("#contact", "Contact")]
     return f"""<footer class="footer">
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-col"><a href="index.html" aria-label="Studio AXD home">{LOGO}</a><p style="margin-top:16px;max-width:30ch">Websites, automation and custom software, built in Mysuru, Karnataka.</p></div>
+      <div class="foot-col"><a href="/" aria-label="Studio AXD home">{LOGO}</a><p style="margin-top:16px;max-width:30ch">Websites, automation and custom software, built in Mysuru, Karnataka.</p></div>
       {col("What we build", SERVICES)}
       {col("Who it is for", INDUSTRIES)}
       {col("Studio", studio)}
     </div>
-    <div class="foot-base"><p>&copy; 2026 Studio AXD &middot; Mysuru, Karnataka, India &middot; GSTIN 29IDDPP6207A1ZM</p><p><a href="privacy.html">Privacy</a> &nbsp; <a href="terms.html">Terms</a></p></div>
+    <div class="foot-base"><p>&copy; 2026 Studio AXD &middot; Mysuru, Karnataka, India &middot; GSTIN 29IDDPP6207A1ZM</p><p><a href="/privacy">Privacy</a> &nbsp; <a href="/terms">Terms</a></p></div>
   </div>
 </footer>
 <div class="mbar" aria-label="Contact"><a class="btn" href="{WA}" target="_blank" rel="noopener">WhatsApp us</a><a class="btn btn-ink" href="tel:+918762553585">Call</a></div>"""
+
+
+def tidy(html):
+    """what visitors see in View Source: no comments, no indentation, no blank lines"""
+    html = re.sub(r"<!--.*?-->", "", html, flags=re.S)
+    return "\n".join(line.strip() for line in html.splitlines() if line.strip()) + "\n"
 
 
 def build(page_file):
@@ -159,9 +175,8 @@ def build(page_file):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;800&family=Geist+Mono:wght@500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v={V}">
+<link rel="stylesheet" href="/styles.css?v={V}">
 <script>
-  // motion is opt-in: only hide things for animation when JS runs and the visitor allows motion
   document.documentElement.classList.add('js');
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
 </script>
@@ -173,11 +188,11 @@ def build(page_file):
 {contact(cfg) if cfg.get("contact", True) else ""}
 </main>
 {footer()}
-<script src="main.js?v={V}" defer></script>
+<script src="/main.js?v={V}" defer></script>
 </body>
 </html>
 """
-    (SITE / name).write_text(out, encoding="utf-8", newline="\n")
+    (OUT / name).write_text(tidy(out), encoding="utf-8", newline="\n")
     return name
 
 
@@ -185,4 +200,8 @@ if __name__ == "__main__":
     pages = sorted((HERE / "pages").glob("*.html"))
     missing = [p.name for p in pages if not (HERE / "heads" / p.name).exists()]
     assert not missing, f"no head file for {missing}"
-    print("built:", ", ".join(build(p) for p in pages))
+    assert "<pre" not in "".join(p.read_text(encoding="utf-8") for p in pages), "tidy() would break <pre> blocks"
+    A = HERE / "assets"
+    (OUT / "styles.css").write_text(rcssmin.cssmin((A / "styles.css").read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
+    (OUT / "main.js").write_text(rjsmin.jsmin((A / "main.js").read_text(encoding="utf-8")), encoding="utf-8", newline="\n")
+    print("built:", ", ".join(build(p) for p in pages), "+ styles.css, main.js")
